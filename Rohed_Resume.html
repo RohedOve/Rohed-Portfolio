@@ -1,0 +1,1586 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rohed Deb Ove — Portfolio</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #080a0f;
+      --bg2: #0d1018;
+      --bg3: #111520;
+      --surface: #151a25;
+      --border: #1e2535;
+      --accent: #4af0c4;
+      --accent2: #7b6cff;
+      --accent3: #f0a44a;
+      --text: #e8eaf0;
+      --muted: #5a6175;
+      --mid: #8892a4;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* Custom Cursor */
+    .cursor {
+      width: 12px;
+      height: 12px;
+      background: var(--accent);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s, width 0.2s, height 0.2s, background 0.2s;
+      mix-blend-mode: screen;
+    }
+
+    .cursor-ring {
+      width: 36px;
+      height: 36px;
+      border: 1px solid rgba(74, 240, 196, 0.4);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: left 0.12s ease-out, top 0.12s ease-out, width 0.2s, height 0.2s;
+    }
+
+    body:has(a:hover) .cursor,
+    body:has(button:hover) .cursor {
+      width: 20px;
+      height: 20px;
+      background: var(--accent2);
+    }
+
+    /* Grid Lines Background */
+    .grid-bg {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(74, 240, 196, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(74, 240, 196, 0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Glow Orbs */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.15;
+    }
+
+    .orb1 {
+      width: 500px;
+      height: 500px;
+      background: var(--accent2);
+      top: -100px;
+      right: -100px;
+    }
+
+    .orb2 {
+      width: 400px;
+      height: 400px;
+      background: var(--accent);
+      bottom: 10%;
+      left: -150px;
+      opacity: 0.08;
+    }
+
+    /* Noise Overlay */
+    .noise {
+      position: fixed;
+      inset: 0;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 20px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s, background 0.3s;
+    }
+
+    nav.scrolled {
+      background: rgba(8, 10, 15, 0.9);
+      backdrop-filter: blur(20px);
+      border-color: var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-logo span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    .nav-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    .nav-cv-btn {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 18px;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: transparent;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+      white-space: nowrap;
+    }
+
+    .nav-cv-btn:hover {
+      background: var(--accent);
+      color: var(--bg);
+      box-shadow: 0 0 16px rgba(74, 240, 196, 0.35);
+    }
+
+    .nav-cv-btn svg {
+      transition: transform 0.25s;
+    }
+
+    .nav-cv-btn:hover svg {
+      transform: translateY(2px);
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+        box-shadow: 0 0 0 0 rgba(74, 240, 196, 0.4);
+      }
+
+      50% {
+        opacity: 0.7;
+        box-shadow: 0 0 0 8px rgba(74, 240, 196, 0);
+      }
+    }
+
+    /* SECTIONS */
+    section {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 120px 60px 80px;
+    }
+
+    .hero-inner {
+      max-width: 900px;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s forwards;
+    }
+
+    .hero-tag::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .hero-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.4s forwards;
+    }
+
+    .hero-name .line2 {
+      display: block;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(232, 234, 240, 0.25);
+    }
+
+    .hero-name .accent-word {
+      color: var(--accent);
+    }
+
+    .hero-bio {
+      margin-top: 32px;
+      max-width: 520px;
+      font-size: 0.85rem;
+      line-height: 1.8;
+      color: var(--mid);
+      opacity: 0;
+      animation: fadeUp 0.8s 0.6s forwards;
+    }
+
+    .hero-cta {
+      margin-top: 48px;
+      display: flex;
+      gap: 16px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.8s forwards;
+    }
+
+    .btn-primary {
+      padding: 14px 32px;
+      background: var(--accent);
+      color: var(--bg);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      display: inline-block;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-primary:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 4px 4px 0 var(--accent2);
+    }
+
+    .btn-ghost {
+      padding: 14px 32px;
+      border: 1px solid var(--border);
+      color: var(--mid);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      display: inline-block;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .btn-download {
+      padding: 14px 32px;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      background: transparent;
+      transition: background 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-download:hover {
+      background: var(--accent);
+      color: var(--bg);
+      transform: translate(-2px, -2px);
+      box-shadow: 4px 4px 0 var(--accent2);
+    }
+
+    .btn-download svg {
+      transition: transform 0.2s;
+    }
+
+    .btn-download:hover svg {
+      transform: translateY(2px);
+    }
+
+    .hero-socials {
+      position: absolute;
+      right: 60px;
+      bottom: 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: center;
+      opacity: 0;
+      animation: fadeUp 0.8s 1s forwards;
+    }
+
+    .hero-socials::after {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 60px;
+      background: var(--border);
+      margin-top: 8px;
+    }
+
+    .hero-socials a {
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      writing-mode: vertical-rl;
+      transition: color 0.2s;
+    }
+
+    .hero-socials a:hover {
+      color: var(--accent);
+    }
+
+    /* ABOUT / SKILLS */
+    #about {
+      padding: 120px 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      border-top: 1px solid var(--border);
+    }
+
+    .section-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .section-label::before {
+      content: attr(data-num);
+      color: var(--muted);
+      font-size: 0.6rem;
+    }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 2.8rem;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+
+    .section-title em {
+      font-family: 'Instrument Serif', serif;
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .about-text {
+      font-size: 0.82rem;
+      line-height: 1.9;
+      color: var(--mid);
+    }
+
+    .about-text p+p {
+      margin-top: 16px;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .skill-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .skill-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(74, 240, 196, 0.05), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .skill-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .skill-card:hover::before {
+      opacity: 1;
+    }
+
+    .skill-icon {
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+    }
+
+    .skill-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 0.8rem;
+      margin-bottom: 4px;
+    }
+
+    .skill-tools {
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    .skill-bar {
+      margin-top: 10px;
+      height: 2px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .skill-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transform-origin: left;
+      transform: scaleX(0);
+      transition: transform 1s ease;
+    }
+
+    .skill-card.visible .skill-fill {
+      transform: scaleX(1);
+    }
+
+    /* EDUCATION */
+    #education {
+      padding: 120px 60px;
+      border-top: 1px solid var(--border);
+    }
+
+    .edu-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 56px;
+    }
+
+    .edu-card {
+      border: 1px solid var(--border);
+      padding: 32px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.3s;
+    }
+
+    .edu-card:hover {
+      border-color: var(--accent2);
+    }
+
+    .edu-year {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      margin-bottom: 16px;
+      text-transform: uppercase;
+    }
+
+    .edu-degree {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      line-height: 1.3;
+      margin-bottom: 8px;
+    }
+
+    .edu-school {
+      font-size: 0.75rem;
+      color: var(--mid);
+      margin-bottom: 20px;
+    }
+
+    .edu-gpa {
+      font-size: 2rem;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      color: transparent;
+      -webkit-text-stroke: 1px var(--accent);
+    }
+
+    .edu-gpa-label {
+      font-size: 0.62rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    .edu-num {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      font-size: 3rem;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      color: var(--border);
+      line-height: 1;
+    }
+
+    /* PROJECTS */
+    #projects {
+      padding: 120px 60px;
+      border-top: 1px solid var(--border);
+    }
+
+    .projects-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 56px;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+    }
+
+    .project-card {
+      background: var(--bg2);
+      padding: 48px 40px;
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+      cursor: pointer;
+    }
+
+    .project-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+
+    .project-card:hover {
+      background: var(--surface);
+    }
+
+    .project-card:hover::after {
+      transform: scaleX(1);
+    }
+
+    .project-num {
+      font-size: 0.62rem;
+      color: var(--muted);
+      letter-spacing: 0.15em;
+      margin-bottom: 20px;
+    }
+
+    .project-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.4rem;
+      margin-bottom: 16px;
+      line-height: 1.2;
+      transition: color 0.2s;
+    }
+
+    .project-card:hover .project-title {
+      color: var(--accent);
+    }
+
+    .project-desc {
+      font-size: 0.78rem;
+      color: var(--mid);
+      line-height: 1.7;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 24px;
+    }
+
+    .tag {
+      padding: 4px 12px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      text-transform: uppercase;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .project-card:hover .tag {
+      border-color: rgba(74, 240, 196, 0.3);
+      color: var(--accent);
+    }
+
+    .project-arrow {
+      position: absolute;
+      top: 40px;
+      right: 40px;
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      color: var(--muted);
+      transition: border-color 0.2s, color 0.2s, transform 0.2s;
+    }
+
+    .project-card:hover .project-arrow {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translate(3px, -3px);
+    }
+
+    /* COURSES & CERTS */
+    #courses {
+      padding: 120px 60px;
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+    }
+
+    .cert-list {
+      margin-top: 40px;
+    }
+
+    .cert-item {
+      display: flex;
+      gap: 20px;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border);
+      transition: padding-left 0.2s;
+    }
+
+    .cert-item:hover {
+      padding-left: 8px;
+    }
+
+    .cert-icon {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+      transition: border-color 0.2s;
+    }
+
+    .cert-item:hover .cert-icon {
+      border-color: var(--accent);
+    }
+
+    .cert-provider {
+      font-size: 0.62rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .cert-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .cert-desc {
+      font-size: 0.72rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* INTERESTS */
+    #interests {
+      padding: 80px 60px 120px;
+      border-top: 1px solid var(--border);
+    }
+
+    .interests-row {
+      display: flex;
+      gap: 2px;
+      margin-top: 48px;
+    }
+
+    .interest-block {
+      flex: 1;
+      padding: 48px 32px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      text-align: center;
+      transition: background 0.3s, border-color 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .interest-block::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(74, 240, 196, 0.06), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .interest-block:hover {
+      background: var(--surface);
+      border-color: rgba(74, 240, 196, 0.3);
+    }
+
+    .interest-block:hover::before {
+      opacity: 1;
+    }
+
+    .interest-emoji {
+      font-size: 2.5rem;
+      display: block;
+      margin-bottom: 16px;
+    }
+
+    .interest-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* CONTACT */
+    #contact {
+      padding: 120px 60px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .contact-inner {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .contact-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+
+    .contact-title span {
+      color: var(--accent);
+    }
+
+    .contact-sub {
+      font-size: 0.82rem;
+      color: var(--mid);
+      line-height: 1.8;
+      margin-bottom: 48px;
+    }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 48px;
+    }
+
+    .contact-link {
+      padding: 10px 20px;
+      border: 1px solid var(--border);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .contact-link:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .contact-email {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px solid var(--accent);
+      padding-bottom: 4px;
+      transition: color 0.2s;
+    }
+
+    .contact-email:hover {
+      color: var(--accent);
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 32px 60px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* SCROLLBAR */
+    ::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 2px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent);
+    }
+
+    /* SELECTION */
+    ::selection {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        padding: 16px 24px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      #hero {
+        padding: 100px 24px 80px;
+      }
+
+      .hero-socials {
+        display: none;
+      }
+
+      #about {
+        padding: 80px 24px;
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+
+      #education {
+        padding: 80px 24px;
+      }
+
+      .edu-grid {
+        grid-template-columns: 1fr;
+      }
+
+      #projects {
+        padding: 80px 24px;
+      }
+
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+
+      #courses {
+        padding: 80px 24px;
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      #interests {
+        padding: 80px 24px;
+      }
+
+      .interests-row {
+        flex-direction: column;
+      }
+
+      #contact {
+        padding: 80px 24px;
+      }
+
+      footer {
+        padding: 24px;
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+      }
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+  <div class="grid-bg"></div>
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="noise"></div>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <a href="#hero" class="nav-logo">R<span>.</span>O</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#courses">Courses</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div style="display:flex;align-items:center;gap:16px;">
+      <div class="nav-dot"></div>
+      <button class="nav-cv-btn" onclick="showCVPreview()">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+          <polyline points="7 10 12 15 17 10" />
+          <line x1="12" y1="15" x2="12" y2="3" />
+        </svg>
+        CV
+      </button>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-inner">
+      <div class="hero-tag">CSE Graduate — Chattogram, Bangladesh</div>
+      <h1 class="hero-name">
+        Rohed<br>
+        <span class="line2">Deb <span class="accent-word">Ove</span></span>
+      </h1>
+      <p class="hero-bio">
+        CSE graduate with a passion for machine learning,
+        creative design and building things that matter.
+      </p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn-download">View Work</a>
+        <a href="#contact" class="btn-ghost">Get in Touch</a>
+        <button class="btn-download" onclick="showCVPreview()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+            <polyline points="7 10 12 15 17 10" />
+            <line x1="12" y1="15" x2="12" y2="3" />
+          </svg>
+          Download CV
+        </button>
+      </div>
+    </div>
+    <div class="hero-socials">
+      <a href="https://linkedin.com/in/rohed-ove" target="_blank">LinkedIn</a>
+      <a href="https://github.com/RohedOve" target="_blank">GitHub</a>
+      <a href="https://behance.net/rohedove123" target="_blank">Behance</a>
+    </div>
+  </section>
+
+  <!-- ABOUT & SKILLS -->
+  <section id="about">
+    <div class="reveal">
+      <div class="section-label" data-num="01">About</div>
+      <h2 class="section-title">Crafting <em>ideas</em> into reality</h2>
+      <div class="about-text">
+        <p>I'm a Computer Science and Engineering graduate with interest in machine learning, programming and digital
+          design. I enjoy building systems that are intelligent and visually compelling.</p>
+        <p>My work spans from training predictive ML models to designing sharp visual identities and developing
+          responsive web experiences — always with a focus on creativity, precision and purpose.</p>
+        <p>Based in Chattogram, Bangladesh, I'm actively seeking new professional opportunities to contribute to
+          meaningful projects and grow in dynamic collaborative environments.</p>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="section-label" data-num="02">Skills</div>
+      <h2 class="section-title" style="margin-bottom: 32px;">What I <em>work</em> with</h2>
+      <div class="skills-grid">
+        <div class="skill-card">
+          <div class="skill-icon">🎨</div>
+          <div class="skill-name">Graphic Design</div>
+          <div class="skill-tools">Adobe Illustrator · Canva</div>
+          <div class="skill-bar">
+            <div class="skill-fill" style="--w:0.88"></div>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">🤖</div>
+          <div class="skill-name">Machine Learning</div>
+          <div class="skill-tools">Python · Scikit-learn</div>
+          <div class="skill-bar">
+            <div class="skill-fill" style="--w:0.8"></div>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">💻</div>
+          <div class="skill-name">Programming</div>
+          <div class="skill-tools">C · Python · HTML · CSS</div>
+          <div class="skill-bar">
+            <div class="skill-fill" style="--w:0.82"></div>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">🌐</div>
+          <div class="skill-name">Web Dev</div>
+          <div class="skill-tools">HTML · CSS · Responsive UI</div>
+          <div class="skill-bar">
+            <div class="skill-fill" style="--w:0.75"></div>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">📂</div>
+          <div class="skill-name">Version Control</div>
+          <div class="skill-tools">Git · GitHub</div>
+          <div class="skill-bar">
+            <div class="skill-fill" style="--w:0.78"></div>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-icon">✂️</div>
+          <div class="skill-name">Editing</div>
+          <div class="skill-tools">CapCut · Canva</div>
+          <div class="skill-bar">
+            <div class="skill-fill" style="--w:0.85"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="reveal">
+      <div class="section-label" data-num="03">Education</div>
+      <h2 class="section-title">Academic <em>journey</em></h2>
+    </div>
+    <div class="edu-grid">
+      <div class="edu-card reveal">
+        <div class="edu-num">01</div>
+        <div class="edu-year">2022 — 2025</div>
+        <div class="edu-degree">B.Sc. in Computer Science & Engineering</div>
+        <div class="edu-school">Premier University, Chattogram</div>
+        <div class="edu-gpa">3.25</div>
+        <div class="edu-gpa-label">CGPA</div>
+      </div>
+      <div class="edu-card reveal" style="transition-delay:0.1s">
+        <div class="edu-num">02</div>
+        <div class="edu-year">2019 — 2020</div>
+        <div class="edu-degree">Higher Secondary Certificate</div>
+        <div class="edu-school">BAF Shaheen College</div>
+        <div class="edu-gpa">5.00</div>
+        <div class="edu-gpa-label">GPA</div>
+      </div>
+      <div class="edu-card reveal" style="transition-delay:0.2s">
+        <div class="edu-num">03</div>
+        <div class="edu-year">2017 — 2018</div>
+        <div class="edu-degree">Secondary School Certificate</div>
+        <div class="edu-school">PDB High School</div>
+        <div class="edu-gpa">4.83</div>
+        <div class="edu-gpa-label">GPA</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="projects-header reveal">
+      <div>
+        <div class="section-label" data-num="04">Projects</div>
+        <h2 class="section-title">Selected <em>work</em></h2>
+      </div>
+      <a href="https://rohedove.netlify.app" target="_blank" class="btn-ghost" style="white-space:nowrap">View Portfolio
+        →</a>
+    </div>
+    <div class="projects-grid">
+      <div class="project-card reveal">
+        <a class="project-arrow" href="https://github.com/RohedOve/Graphics-Design-Projects" target="_blank"
+          style="text-decoration:none;color:inherit;">↗</a>
+        <div class="project-num">001</div>
+        <div class="project-title">Graphic Design Projects</div>
+        <div class="project-desc">Turning ideas into stunning visuals — where creativity meets precision. A collection
+          of brand identities, digital artwork, and visual communication pieces crafted with meticulous attention to
+          detail.</div>
+        <div class="project-tags">
+          <span class="tag">Illustrator</span>
+          <span class="tag">Canva</span>
+          <span class="tag">Visual Design</span>
+        </div>
+      </div>
+      <div class="project-card reveal" style="transition-delay:0.1s">
+        <a class="project-arrow" href="https://github.com/RohedOve/Machine-Learning-Projects" target="_blank"
+          style="text-decoration:none;color:inherit;">↗</a>
+        <div class="project-num">002</div>
+        <div class="project-title">Machine Learning Projects</div>
+        <div class="project-desc">Practical ML projects showcasing data preprocessing, model development and real-world
+          prediction solutions. Built end-to-end pipelines using Scikit-learn and Python for actionable insights.</div>
+        <div class="project-tags">
+          <span class="tag">Python</span>
+          <span class="tag">Scikit-learn</span>
+          <span class="tag">Data Analysis</span>
+        </div>
+      </div>
+      <div class="project-card reveal" style="transition-delay:0.15s">
+        <a class="project-arrow" href="https://github.com/RohedOve/Professional-Portfolio-Creation" target="_blank"
+          style="text-decoration:none;color:inherit;">↗</a>
+        <div class="project-num">003</div>
+        <div class="project-title">Professional Portfolio</div>
+        <div class="project-desc">Developed a responsive portfolio website showcasing skills, projects and creative work
+          with a clean and modern design. Focused on performance, UX, and aesthetic cohesion.</div>
+        <div class="project-tags">
+          <span class="tag">HTML</span>
+          <span class="tag">CSS</span>
+          <span class="tag">Responsive</span>
+        </div>
+      </div>
+      <div class="project-card reveal" style="transition-delay:0.2s">
+        <a class="project-arrow" href="https://github.com/RohedOve/Website-Development" target="_blank"
+          style="text-decoration:none;color:inherit;">↗</a>
+        <div class="project-num">004</div>
+        <div class="project-title">E-Commerce Website</div>
+        <div class="project-desc">Designed and developed a modern e-commerce website featuring responsive UI, product
+          management and seamless user experience — from concept to deployed product.</div>
+        <div class="project-tags">
+          <span class="tag">HTML</span>
+          <span class="tag">CSS</span>
+          <span class="tag">UX Design</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COURSES & CERTS -->
+  <section id="courses">
+    <div class="reveal">
+      <div class="section-label" data-num="05">Courses</div>
+      <h2 class="section-title">Learning & <em>growth</em></h2>
+      <div class="cert-list">
+        <div class="cert-item">
+          <div class="cert-icon">📊</div>
+          <div>
+            <div class="cert-provider">Coursera</div>
+            <div class="cert-name">Started with Microsoft Excel</div>
+            <div class="cert-desc">Foundational skills in Excel for data entry, spreadsheet management and data analysis
+              for business and academic tasks.</div>
+          </div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-icon">🎨</div>
+          <div>
+            <div class="cert-provider">Ostad</div>
+            <div class="cert-name">Fundamentals of Graphic Design</div>
+            <div class="cert-desc">Training in layout, typography, color theory, visual composition and creative design
+              principles and techniques.</div>
+          </div>
+        </div>
+        <div class="cert-item">
+          <div class="cert-icon">🧠</div>
+          <div>
+            <div class="cert-provider">UniAthena</div>
+            <div class="cert-name">Basics of Machine Learning Algorithms</div>
+            <div class="cert-desc">Fundamental ML algorithms including supervised learning, model evaluation and data
+              analysis for predictive modeling and AI.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="section-label" data-num="06">Certificates</div>
+      <h2 class="section-title">Verified <em>credentials</em></h2>
+      <div class="cert-list" style="margin-top:32px">
+        <a class="cert-item" href="https://coursera.org/share/8ea6208d966c9730d72a0758001437c4" target="_blank"
+          style="text-decoration:none;color:inherit;display:flex;">
+          <div class="cert-icon">🏅</div>
+          <div>
+            <div class="cert-provider">Coursera Certified</div>
+            <div class="cert-name">Microsoft Excel Fundamentals</div>
+          </div>
+        </a>
+        <a class="cert-item" href="https://ostad.app/share/certificate/c40718-rohed-deb-ove" target="_blank"
+          style="text-decoration:none;color:inherit;display:flex;">
+          <div class="cert-icon">🏅</div>
+          <div>
+            <div class="cert-provider">Ostad Certified</div>
+            <div class="cert-name">Graphic Design Principles</div>
+          </div>
+        </a>
+        <a class="cert-item" href="https://docs.uniathena.com/prod/course/certificate/322_1773415541_certificate.jpg"
+          target="_blank" style="text-decoration:none;color:inherit;display:flex;">
+          <div class="cert-icon">🏅</div>
+          <div>
+            <div class="cert-provider">UniAthena Certified</div>
+            <div class="cert-name">Machine Learning Algorithms</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERESTS -->
+  <section id="interests">
+    <div class="reveal">
+      <div class="section-label" data-num="07">Interests</div>
+      <h2 class="section-title">Beyond <em>code</em></h2>
+    </div>
+    <div class="interests-row reveal">
+      <div class="interest-block">
+        <span class="interest-emoji">✍️</span>
+        <div class="interest-name">Content Creation</div>
+      </div>
+      <div class="interest-block">
+        <span class="interest-emoji">📷</span>
+        <div class="interest-name">Photography</div>
+      </div>
+      <div class="interest-block">
+        <span class="interest-emoji">📚</span>
+        <div class="interest-name">Reading Books</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-inner reveal">
+      <div class="section-label" data-num="08" style="justify-content:center">Contact</div>
+      <h2 class="contact-title">Let's <span>build</span><br>something great</h2>
+      <p class="contact-sub">Open to full-time roles, freelance projects, and creative collaborations. If you have an
+        interesting problem, I'd love to hear about it.</p>
+      <a href="https://mail.google.com/mail/?view=cm&to=rohedove23@gmail.com" target="_blank"
+        class="contact-email">rohedove23@gmail.com</a>
+      <div class="contact-links" style="margin-top:40px">
+        <a href="https://rohedove.netlify.app" target="_blank" class="contact-link">🌐 Portfolio</a>
+        <a href="https://linkedin.com/in/rohed-ove" target="_blank" class="contact-link">💼 LinkedIn</a>
+        <a href="https://github.com/RohedOve" target="_blank" class="contact-link">🐙 GitHub</a>
+        <a href="https://behance.net/rohedove123" target="_blank" class="contact-link">🎨 Behance</a>
+        <a href="https://instagram.com/__the.writer___" target="_blank" class="contact-link">📸 Instagram</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2025 Rohed Deb Ove</span>
+    <span>Chattogram, Bangladesh</span>
+    <span>CSE Graduate · Designer · Developer</span>
+  </footer>
+
+  <script>
+    // Cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+      ring.style.left = e.clientX + 'px';
+      ring.style.top = e.clientY + 'px';
+    });
+
+    // Nav scroll
+    const nav = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // Reveal on scroll
+    const reveals = document.querySelectorAll('.reveal');
+    const skillCards = document.querySelectorAll('.skill-card');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    reveals.forEach(el => observer.observe(el));
+    skillCards.forEach(el => observer.observe(el));
+
+    // Download CV as PDF
+    // CV Preview Modal
+    let cvPdfLoaded = false;
+
+    function showCVPreview() {
+      const modal = document.getElementById('cvModal');
+      if (!modal._listenerAdded) {
+        modal.addEventListener('click', function (e) { if (e.target === this) closeCVPreview(); });
+        modal._listenerAdded = true;
+      }
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      if (!cvPdfLoaded) {
+        cvPdfLoaded = true;
+        renderPDFPreview(CV_PDF_PATH);
+      }
+    }
+
+    function renderPDFPreview(pdfPath) {
+      const loading = document.getElementById('cvLoading');
+      const pagesDiv = document.getElementById('cvPages');
+      loading.style.display = 'none';
+      pagesDiv.innerHTML = '';
+
+      const iframe = document.createElement('iframe');
+      iframe.src = pdfPath;
+      iframe.style.cssText = 'width:100%;height:75vh;border:none;display:block;';
+      iframe.onerror = function () {
+        pagesDiv.innerHTML = '<span style="color:#ff6b6b;font-size:0.75rem;padding:20px;display:block;text-align:center;">Could not load PDF. Please use the Download PDF button.</span>';
+      };
+      pagesDiv.appendChild(iframe);
+    }
+
+    function closeCVPreview() {
+      document.getElementById('cvModal').style.display = 'none';
+      document.body.style.overflow = '';
+    }
+
+    // Close on Escape key
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCVPreview(); });
+
+    const CV_PDF_PATH = 'Rohed_Resume.pdf';
+
+    function downloadCV() {
+      const a = document.createElement('a');
+      a.href = CV_PDF_PATH;
+      a.download = 'Rohed_Deb_Ove_CV.pdf';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+  </script>
+
+  <!-- CV PREVIEW MODAL -->
+  <div id="cvModal" style="
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:10000;
+  background:rgba(8,10,15,0.92);
+  backdrop-filter:blur(12px);
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  animation: fadeIn 0.25s ease;
+">
+    <div style="
+    width:100%;
+    max-width:760px;
+    max-height:90vh;
+    background:var(--bg2);
+    border:1px solid var(--border);
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+    box-shadow:0 0 60px rgba(74,240,196,0.1);
+  ">
+      <!-- Modal Header -->
+      <div style="
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:16px 24px;
+      border-bottom:1px solid var(--border);
+      flex-shrink:0;
+    ">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);">CV
+            Preview</span>
+          <span style="font-size:0.6rem;color:var(--muted);">— Rohed Deb Ove</span>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;">
+          <button onclick="downloadCV()" style="
+          display:flex;align-items:center;gap:6px;
+          padding:8px 20px;
+          background:var(--accent);
+          color:var(--bg);
+          border:none;
+          font-family:'DM Mono',monospace;
+          font-size:0.68rem;
+          letter-spacing:0.1em;
+          text-transform:uppercase;
+          cursor:pointer;
+          transition:opacity 0.2s,transform 0.2s;
+        " onmouseover="this.style.opacity='0.85'" onmouseout="this.style.opacity='1'">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            Download PDF
+          </button>
+          <button onclick="closeCVPreview()" style="
+          width:32px;height:32px;
+          border:1px solid var(--border);
+          background:transparent;
+          color:var(--mid);
+          font-size:1.1rem;
+          cursor:pointer;
+          display:flex;align-items:center;justify-content:center;
+          transition:border-color 0.2s,color 0.2s;
+        " onmouseover="this.style.borderColor='var(--accent)';this.style.color='var(--accent)'"
+            onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--mid)'">✕</button>
+        </div>
+      </div>
+      <!-- PDF Viewer -->
+      <div style="flex:1;overflow-y:auto;overflow-x:hidden;min-height:0;background:#1a1a1a;" id="cvScrollArea">
+        <div id="cvLoading"
+          style="display:none;flex-direction:column;align-items:center;justify-content:center;height:400px;gap:16px;color:var(--muted);font-size:0.75rem;letter-spacing:0.1em;">
+          <div id="cvSpinner"
+            style="width:32px;height:32px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite;">
+          </div>
+          LOADING CV...
+        </div>
+        <div id="cvPages" style="display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 0;"></div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
