@@ -1071,6 +1071,37 @@
       border-color: var(--accent);
     }
 
+    .cert-preview-badge {
+      margin-left: auto;
+      align-self: center;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      flex-shrink: 0;
+      white-space: nowrap;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+
+    .cert-preview-badge svg {
+      width: 13px;
+      height: 13px;
+      flex-shrink: 0;
+    }
+
+    .cert-item:hover .cert-preview-badge {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(137, 207, 240, 0.08);
+    }
+
     .cert-provider {
       font-size: 0.8rem;
       font-weight: 500;
@@ -1092,6 +1123,126 @@
       font-weight: 500;
       color: var(--muted);
       line-height: 1.6;
+    }
+
+    /* CERTIFICATE PREVIEW MODAL */
+    .cert-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      background: rgba(8, 10, 15, 0.92);
+      backdrop-filter: blur(12px);
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      animation: fadeIn 0.25s ease;
+    }
+
+    .cert-modal-box {
+      width: 100%;
+      max-width: 760px;
+      max-height: 90vh;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 0 60px rgba(74, 240, 196, 0.1);
+    }
+
+    .cert-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .cert-modal-header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .cert-modal-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+
+    .cert-modal-provider {
+      font-size: 0.6rem;
+      color: var(--muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .cert-modal-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .cert-modal-download {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 20px;
+      background: var(--accent);
+      color: var(--bg);
+      border: none;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .cert-modal-download:hover {
+      opacity: 0.85;
+    }
+
+    .cert-modal-close {
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--mid);
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .cert-modal-close:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .cert-modal-body {
+      flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      min-height: 0;
+      background: #1a1a1a;
+    }
+
+    .cert-modal-pages {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 8px 0;
     }
 
     /* INTERESTS */
@@ -1463,6 +1614,14 @@
         font-size: 0.85rem;
       }
 
+      .cert-preview-badge {
+        padding: 7px 9px;
+      }
+
+      .cert-preview-badge span {
+        display: none;
+      }
+
       .interest-block {
         padding: 32px 20px;
       }
@@ -1579,13 +1738,13 @@
     </div>
     <div class="hero-orbit" aria-hidden="true">
       <div class="orbit-ring ring1">
-        <span class="orbit-node">AI/ML</span>
+        <span class="orbit-node">Design</span>
       </div>
       <div class="orbit-ring ring2">
         <span class="orbit-node">Web Dev</span>
       </div>
       <div class="orbit-ring ring3">
-        <span class="orbit-node">Design</span>
+        <span class="orbit-node">AI/ML</span>
       </div>
       <div class="orbit-core">
         <img src="profile.jpg" alt="Rohed Deb Ove"
@@ -1706,9 +1865,11 @@
       <h2 class="section-title">Professional <em>experience</em></h2>
     </div>
     <div class="exp-list">
+
       <div class="exp-item reveal">
         <div style="width:100%;">
-          <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:12px 16px;margin-bottom:8px;">
+          <div
+            style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:12px 16px;margin-bottom:8px;">
             <div class="exp-role" style="margin-bottom:0;">Machine Learning Intern</div>
             <div class="exp-duration">Mar 2026 — Jun 2026</div>
           </div>
@@ -1719,6 +1880,7 @@
           </div>
         </div>
       </div>
+
     </div>
   </section>
 
@@ -1827,34 +1989,108 @@
     <div class="reveal">
       <div class="section-label" data-num="07">Certificates</div>
       <h2 class="section-title">Verified <em>credentials</em></h2>
-      <div class="cert-list" style="margin-top:32px">
-        <a class="cert-item" href="https://coursera.org/share/8ea6208d966c9730d72a0758001437c4" target="_blank"
-          style="text-decoration:none;color:inherit;display:flex;">
+
+      <!--
+        ================================================
+        HOW TO ADD A NEW CERTIFICATE
+        ================================================
+        1. Copy one whole ".cert-item" block below (from
+           <div class="cert-item" ...> to its closing </div>).
+        2. Paste it right above the closing </div> of #certList.
+        3. Change only these 5 things in your pasted copy:
+           - cert-provider text        -> e.g. "Google Certified"
+           - cert-name text            -> e.g. "Google Data Analytics"
+           - data-pdf                  -> path to the new PDF file
+           - data-title                -> same as cert-name text
+           - data-provider             -> same as cert-provider text
+        No JavaScript needs to be touched — the Preview button
+        works automatically for any item inside #certList.
+        ================================================
+      -->
+
+      <div class="cert-list" id="certList" style="margin-top:32px">
+        <div class="cert-item" style="display:flex;">
           <div class="cert-icon">🏅</div>
           <div>
             <div class="cert-provider">Coursera Certified</div>
             <div class="cert-name">Microsoft Excel Fundamentals</div>
           </div>
-        </a>
-        <a class="cert-item" href="https://ostad.app/share/certificate/c40718-rohed-deb-ove" target="_blank"
-          style="text-decoration:none;color:inherit;display:flex;">
+          <div class="cert-preview-badge" style="cursor:pointer;" data-pdf="Certificate/Microsoft_Excel_Fundamentals.pdf"
+            data-title="Microsoft Excel Fundamentals" data-provider="Coursera Certified">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+              <circle cx="12" cy="12" r="3" />
+            </svg>
+            <span>Preview</span>
+          </div>
+        </div>
+        <div class="cert-item" style="display:flex;">
           <div class="cert-icon">🏅</div>
           <div>
             <div class="cert-provider">Ostad Certified</div>
             <div class="cert-name">Graphic Design Principles</div>
           </div>
-        </a>
-        <a class="cert-item" href="https://docs.uniathena.com/prod/course/certificate/322_1773415541_certificate.jpg"
-          target="_blank" style="text-decoration:none;color:inherit;display:flex;">
+          <div class="cert-preview-badge" style="cursor:pointer;" data-pdf="Certificate/Graphic_Design_Principles.pdf"
+            data-title="Graphic Design Principles" data-provider="Ostad Certified">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+              <circle cx="12" cy="12" r="3" />
+            </svg>
+            <span>Preview</span>
+          </div>
+        </div>
+        <div class="cert-item" style="display:flex;">
           <div class="cert-icon">🏅</div>
           <div>
             <div class="cert-provider">UniAthena Certified</div>
             <div class="cert-name">Machine Learning Algorithms</div>
           </div>
-        </a>
+          <div class="cert-preview-badge" style="cursor:pointer;" data-pdf="Certificate/Machine_Learning_Algorithms.pdf"
+            data-title="Machine Learning Algorithms" data-provider="UniAthena Certified">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+              <circle cx="12" cy="12" r="3" />
+            </svg>
+            <span>Preview</span>
+          </div>
+        </div>
+        <!-- 👆 paste new .cert-item blocks above this line -->
       </div>
     </div>
   </section>
+
+  <!-- CERTIFICATE PREVIEW MODAL -->
+  <div id="certModal" class="cert-modal">
+    <div class="cert-modal-box">
+      <!-- Modal Header -->
+      <div class="cert-modal-header">
+        <div class="cert-modal-header-left">
+          <span class="cert-modal-label">Certificate Preview</span>
+          <span id="certProviderText" class="cert-modal-provider">—</span>
+        </div>
+        <div class="cert-modal-actions">
+          <button onclick="downloadCert()" class="cert-modal-download">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            Download PDF
+          </button>
+          <button onclick="closeCertPreview()" class="cert-modal-close">✕</button>
+        </div>
+      </div>
+      <!-- PDF Viewer -->
+      <div class="cert-modal-body">
+        <div id="certPages" class="cert-modal-pages"></div>
+      </div>
+    </div>
+  </div>
+
 
   <!-- INTERESTS -->
   <section id="interests">
@@ -1985,8 +2221,65 @@
       document.body.style.overflow = '';
     }
 
-    // Close on Escape key
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCVPreview(); });
+    // Certificate Preview Modal
+    let currentCertPath = '';
+    let currentCertName = 'certificate';
+
+    function showCertPreview(pdfPath, title, provider) {
+      const modal = document.getElementById('certModal');
+      if (!modal._listenerAdded) {
+        modal.addEventListener('click', function (e) { if (e.target === this) closeCertPreview(); });
+        modal._listenerAdded = true;
+      }
+      currentCertPath = pdfPath;
+      currentCertName = title;
+      document.getElementById('certProviderText').textContent = provider + ' — ' + title;
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      renderCertPDFPreview(pdfPath);
+    }
+
+    function renderCertPDFPreview(pdfPath) {
+      const pagesDiv = document.getElementById('certPages');
+      pagesDiv.innerHTML = '';
+      const iframe = document.createElement('iframe');
+      iframe.src = pdfPath;
+      iframe.style.cssText = 'width:100%;height:75vh;border:none;display:block;';
+      iframe.onerror = function () {
+        pagesDiv.innerHTML = '<span style="color:#ff6b6b;font-size:0.75rem;padding:20px;display:block;text-align:center;">Could not load certificate. Please check the file path.</span>';
+      };
+      pagesDiv.appendChild(iframe);
+    }
+
+    function closeCertPreview() {
+      document.getElementById('certModal').style.display = 'none';
+      document.body.style.overflow = '';
+    }
+
+    // Auto-wire every ".cert-preview-badge" inside #certList — including any
+    // new certificate items added later — so no JS edits are ever needed.
+    document.getElementById('certList').addEventListener('click', function (e) {
+      const badge = e.target.closest('.cert-preview-badge');
+      if (!badge) return;
+      showCertPreview(badge.dataset.pdf, badge.dataset.title, badge.dataset.provider);
+    });
+
+    function downloadCert() {
+      const a = document.createElement('a');
+      a.href = currentCertPath;
+      a.download = currentCertName.replace(/\s+/g, '_') + '.pdf';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+
+    // Close whichever modal is open on Escape key
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        closeCVPreview();
+        closeCertPreview();
+      }
+    });
 
     const CV_PDF_PATH = 'Rohed_Resume.pdf';
 

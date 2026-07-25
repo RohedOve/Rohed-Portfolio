@@ -314,7 +314,7 @@
     .hero-name {
       font-family: 'Syne', sans-serif;
       font-weight: 800;
-      font-size: clamp(3.5rem, 8vw, 7rem);
+      font-size: clamp(3.5rem, 7vw, 6.5rem);
       line-height: 0.95;
       letter-spacing: -0.02em;
       opacity: 0;
@@ -458,7 +458,7 @@
     /* HERO ORBIT VISUAL */
     .hero-orbit {
       position: absolute;
-      right: 350px;
+      right: 400px;
       top: 50%;
       margin-top: -220px;
       width: 440px;
@@ -617,6 +617,58 @@
     @media (max-width: 1360px) {
       .hero-orbit {
         display: none;
+      }
+    }
+
+    /* Laptop range: scale all text down + tuck the orbit visual */
+    @media (min-width: 1361px) and (max-width: 1750px) {
+      html {
+        font-size: 75%;
+        /* shrinks every rem-based text/element site-wide */
+      }
+
+      .hero-inner {
+        max-width: 600px;
+      }
+
+      .hero-name {
+        font-size: clamp(2.3rem, 3.6vw, 3.8rem);
+      }
+
+      .hero-orbit {
+        right: 140px;
+        width: 320px;
+        height: 320px;
+        margin-top: -160px;
+      }
+
+      .ring1 {
+        width: 320px;
+        height: 320px;
+        margin: -160px 0 0 -160px;
+      }
+
+      .ring2 {
+        width: 230px;
+        height: 230px;
+        margin: -115px 0 0 -115px;
+      }
+
+      .ring3 {
+        width: 150px;
+        height: 150px;
+        margin: -75px 0 0 -75px;
+      }
+
+      .orbit-core {
+        width: 84px;
+        height: 84px;
+        margin: -42px 0 0 -42px;
+      }
+
+      .orbit-node {
+        font-size: 0.62rem;
+        padding: 5px 12px;
       }
     }
 
@@ -2136,7 +2188,7 @@
 
   <!-- FOOTER -->
   <footer>
-    <span>© Rohed Deb Ove</span>
+    <span>© Rohed.Ove</span>
     <span>Chattogram, Bangladesh</span>
     <span>Designer · Developer · Enthusiast</span>
   </footer>
