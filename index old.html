@@ -14,13 +14,31 @@
       --bg2: #0d1018;
       --bg3: #111520;
       --surface: #151a25;
-      --border: #1e2535;
-      --accent: #4af0c4;
-      --accent2: #7b6cff;
+      --border: #3e4556;
+      --accent: #89CFF0;
+      --accent2: #B6D0E2;
       --accent3: #f0a44a;
       --text: #e8eaf0;
       --muted: #5a6175;
       --mid: #8892a4;
+      --stroke: rgba(232, 234, 240, 0.30);
+      --nav-scroll-bg: rgba(8, 10, 15, 0.9);
+    }
+
+    [data-theme="light"] {
+      --bg: #f6f7fa;
+      --bg2: #ffffff;
+      --bg3: #eef0f4;
+      --surface: #ffffff;
+      --border: #c7c9ce;
+      --accent: #6F8FAF;
+      --accent2: #B6D0E2;
+      --accent3: #c97f1f;
+      --text: #14161f;
+      --muted: #838a9c;
+      --mid: #454b5c;
+      --stroke: rgba(20, 22, 31, 0.25);
+      --nav-scroll-bg: rgba(255, 255, 255, 0.85);
     }
 
     * {
@@ -52,13 +70,13 @@
       z-index: 9999;
       transform: translate(-50%, -50%);
       transition: transform 0.1s, width 0.2s, height 0.2s, background 0.2s;
-      mix-blend-mode: screen;
+      /* mix-blend-mode: screen; */
     }
 
     .cursor-ring {
       width: 36px;
       height: 36px;
-      border: 1px solid rgba(74, 240, 196, 0.4);
+      border: 1px solid rgba(60, 75, 110, 0.65);
       border-radius: 50%;
       position: fixed;
       pointer-events: none;
@@ -140,7 +158,7 @@
     }
 
     nav.scrolled {
-      background: rgba(8, 10, 15, 0.9);
+      background: var(--nav-scroll-bg);
       backdrop-filter: blur(20px);
       border-color: var(--border);
     }
@@ -148,7 +166,7 @@
     .nav-logo {
       font-family: 'Syne', sans-serif;
       font-weight: 800;
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       letter-spacing: 0.05em;
       color: var(--text);
       text-decoration: none;
@@ -165,7 +183,7 @@
     }
 
     .nav-links a {
-      font-size: 0.72rem;
+      font-size: 0.9rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--muted);
@@ -185,35 +203,39 @@
       animation: pulse 2s infinite;
     }
 
-    .nav-cv-btn {
+    .theme-toggle {
+      width: 36px;
+      height: 36px;
       display: flex;
       align-items: center;
-      gap: 7px;
-      padding: 8px 18px;
-      border: 1px solid var(--accent);
-      color: var(--accent);
-      font-family: 'DM Mono', monospace;
-      font-size: 0.68rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+      justify-content: center;
+      border: 1px solid var(--border);
+      color: var(--mid);
       background: transparent;
       cursor: pointer;
-      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-      white-space: nowrap;
+      transition: border-color 0.2s, color 0.2s;
     }
 
-    .nav-cv-btn:hover {
-      background: var(--accent);
-      color: var(--bg);
-      box-shadow: 0 0 16px rgba(74, 240, 196, 0.35);
+    .theme-toggle:hover {
+      border-color: var(--accent);
+      color: var(--accent);
     }
 
-    .nav-cv-btn svg {
-      transition: transform 0.25s;
+    .theme-toggle svg {
+      width: 16px;
+      height: 16px;
     }
 
-    .nav-cv-btn:hover svg {
-      transform: translateY(2px);
+    .theme-toggle .icon-sun {
+      display: none;
+    }
+
+    [data-theme="light"] .theme-toggle .icon-moon {
+      display: none;
+    }
+
+    [data-theme="light"] .theme-toggle .icon-sun {
+      display: block;
     }
 
     @keyframes pulse {
@@ -252,7 +274,7 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      font-size: 0.7rem;
+      font-size: 1em;
       letter-spacing: 0.15em;
       text-transform: uppercase;
       color: var(--accent);
@@ -282,7 +304,7 @@
     .hero-name .line2 {
       display: block;
       color: transparent;
-      -webkit-text-stroke: 1px rgba(232, 234, 240, 0.25);
+      -webkit-text-stroke: 1px var(--stroke);
     }
 
     .hero-name .accent-word {
@@ -292,7 +314,7 @@
     .hero-bio {
       margin-top: 32px;
       max-width: 520px;
-      font-size: 0.85rem;
+      font-size: 1rem;
       line-height: 1.8;
       color: var(--mid);
       opacity: 0;
@@ -312,7 +334,7 @@
       background: var(--accent);
       color: var(--bg);
       font-family: 'DM Mono', monospace;
-      font-size: 0.75rem;
+      font-size: 0.9rem;
       font-weight: 500;
       letter-spacing: 0.1em;
       text-transform: uppercase;
@@ -331,7 +353,8 @@
       border: 1px solid var(--border);
       color: var(--mid);
       font-family: 'DM Mono', monospace;
-      font-size: 0.75rem;
+      font-size: 0.9rem;
+      font-weight: 700;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       text-decoration: none;
@@ -349,7 +372,8 @@
       border: 1px solid var(--accent);
       color: var(--accent);
       font-family: 'DM Mono', monospace;
-      font-size: 0.75rem;
+      font-size: 0.9rem;
+      font-weight: 500;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       text-decoration: none;
@@ -382,7 +406,7 @@
       bottom: 80px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 50px;
       align-items: center;
       opacity: 0;
       animation: fadeUp 0.8s 1s forwards;
@@ -398,7 +422,7 @@
     }
 
     .hero-socials a {
-      font-size: 0.62rem;
+      font-size: 1rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--muted);
@@ -421,7 +445,7 @@
     }
 
     .section-label {
-      font-size: 0.65rem;
+      font-size: 1rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--accent);
@@ -434,13 +458,13 @@
     .section-label::before {
       content: attr(data-num);
       color: var(--muted);
-      font-size: 0.6rem;
+      font-size: 0.8rem;
     }
 
     .section-title {
       font-family: 'Syne', sans-serif;
       font-weight: 700;
-      font-size: 2.8rem;
+      font-size: 3.5rem;
       line-height: 1.1;
       letter-spacing: -0.02em;
       margin-bottom: 24px;
@@ -453,7 +477,7 @@
     }
 
     .about-text {
-      font-size: 0.82rem;
+      font-size: 1rem;
       line-height: 1.9;
       color: var(--mid);
     }
@@ -504,12 +528,13 @@
     .skill-name {
       font-family: 'Syne', sans-serif;
       font-weight: 600;
-      font-size: 0.8rem;
+      font-size: 1rem;
       margin-bottom: 4px;
     }
 
     .skill-tools {
-      font-size: 0.65rem;
+      font-size: 0.8rem;
+      font-weight: 500;
       color: var(--muted);
       letter-spacing: 0.05em;
     }
@@ -544,7 +569,7 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 24px;
-      margin-top: 56px;
+      margin-top: 40px;
     }
 
     .edu-card {
@@ -560,7 +585,8 @@
     }
 
     .edu-year {
-      font-size: 0.65rem;
+      font-size: 0.8rem;
+      font-weight: 400;
       letter-spacing: 0.15em;
       color: var(--accent);
       margin-bottom: 16px;
@@ -570,13 +596,15 @@
     .edu-degree {
       font-family: 'Syne', sans-serif;
       font-weight: 700;
-      font-size: 1rem;
+      font-size: 1.2rem;
       line-height: 1.3;
       margin-bottom: 8px;
     }
 
     .edu-school {
-      font-size: 0.75rem;
+      font-size: 1rem;
+      font-weight: 500;
+
       color: var(--mid);
       margin-bottom: 20px;
     }
@@ -590,7 +618,7 @@
     }
 
     .edu-gpa-label {
-      font-size: 0.62rem;
+      font-size: 0.8rem;
       color: var(--muted);
       letter-spacing: 0.1em;
       text-transform: uppercase;
@@ -618,13 +646,13 @@
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
-      margin-bottom: 56px;
+      margin-bottom: 25px;
     }
 
     .projects-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 2px;
+      gap: 5px;
     }
 
     .project-card {
@@ -659,7 +687,8 @@
     }
 
     .project-num {
-      font-size: 0.62rem;
+      font-size: 0.8rem;
+      font-weight: 500;
       color: var(--muted);
       letter-spacing: 0.15em;
       margin-bottom: 20px;
@@ -668,7 +697,7 @@
     .project-title {
       font-family: 'Syne', sans-serif;
       font-weight: 700;
-      font-size: 1.4rem;
+      font-size: 1.5rem;
       margin-bottom: 16px;
       line-height: 1.2;
       transition: color 0.2s;
@@ -679,7 +708,8 @@
     }
 
     .project-desc {
-      font-size: 0.78rem;
+      font-size: 0.8rem;
+      font-weight: 500;
       color: var(--mid);
       line-height: 1.7;
     }
@@ -695,7 +725,8 @@
       padding: 4px 12px;
       background: var(--bg3);
       border: 1px solid var(--border);
-      font-size: 0.62rem;
+      font-size: 0.75rem;
+      font-weight: 500;
       letter-spacing: 0.08em;
       color: var(--muted);
       text-transform: uppercase;
@@ -738,13 +769,13 @@
     }
 
     .cert-list {
-      margin-top: 40px;
+      margin-top: 0px;
     }
 
     .cert-item {
       display: flex;
       gap: 20px;
-      padding: 24px 0;
+      padding: 20px 0;
       border-bottom: 1px solid var(--border);
       transition: padding-left 0.2s;
     }
@@ -770,7 +801,8 @@
     }
 
     .cert-provider {
-      font-size: 0.62rem;
+      font-size: 0.8rem;
+      font-weight: 500;
       color: var(--accent);
       letter-spacing: 0.1em;
       text-transform: uppercase;
@@ -779,13 +811,14 @@
 
     .cert-name {
       font-family: 'Syne', sans-serif;
-      font-size: 0.9rem;
+      font-size: 1.2rem;
       font-weight: 600;
       margin-bottom: 6px;
     }
 
     .cert-desc {
-      font-size: 0.72rem;
+      font-size: 0.8rem;
+      font-weight: 500;
       color: var(--muted);
       line-height: 1.6;
     }
@@ -859,10 +892,10 @@
     .contact-title {
       font-family: 'Syne', sans-serif;
       font-weight: 800;
-      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-size: clamp(2.5rem, 7vw, 3.5rem);
       line-height: 1;
       letter-spacing: -0.02em;
-      margin-bottom: 24px;
+      margin-bottom: 60px;
     }
 
     .contact-title span {
@@ -870,24 +903,25 @@
     }
 
     .contact-sub {
-      font-size: 0.82rem;
+      font-size: 0.9rem;
       color: var(--mid);
       line-height: 1.8;
-      margin-bottom: 48px;
+      margin-bottom: 60px;
     }
 
     .contact-links {
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 48px;
+      gap: 10px;
+      margin-bottom: 0px;
     }
 
     .contact-link {
       padding: 10px 20px;
       border: 1px solid var(--border);
-      font-size: 0.68rem;
+      font-size: 0.8rem;
+      font-weight: 500;
       letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--muted);
@@ -920,14 +954,15 @@
 
     /* FOOTER */
     footer {
-      padding: 32px 60px;
+      padding: 40px 60px;
       border-top: 1px solid var(--border);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 0.65rem;
+      font-size: 0.9rem;
+      font-weight: 500;
       color: var(--muted);
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
       position: relative;
       z-index: 2;
     }
@@ -1049,6 +1084,122 @@
       }
     }
 
+    @media (max-width: 480px) {
+      nav {
+        padding: 14px 18px;
+      }
+
+      .nav-logo {
+        font-size: 1rem;
+      }
+
+      #hero {
+        padding: 90px 18px 60px;
+      }
+
+      .hero-tag {
+        font-size: 0.62rem;
+        margin-bottom: 24px;
+      }
+
+      .hero-bio {
+        margin-top: 24px;
+        font-size: 0.8rem;
+      }
+
+      .hero-cta {
+        margin-top: 36px;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .btn-primary,
+      .btn-ghost,
+      .btn-download {
+        padding: 12px 22px;
+        font-size: 0.7rem;
+      }
+
+      #about,
+      #education,
+      #projects,
+      #courses,
+      #interests,
+      #contact {
+        padding: 60px 18px;
+      }
+
+      .section-title {
+        font-size: 2rem;
+      }
+
+      .edu-card {
+        padding: 24px;
+      }
+
+      .edu-num {
+        font-size: 2.2rem;
+        top: 16px;
+        right: 16px;
+      }
+
+      .project-card {
+        padding: 32px 22px;
+      }
+
+      .project-title {
+        font-size: 1.15rem;
+      }
+
+      .project-arrow {
+        width: 32px;
+        height: 32px;
+        top: 24px;
+        right: 24px;
+      }
+
+      .cert-item {
+        gap: 14px;
+        padding: 18px 0;
+      }
+
+      .cert-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 0.85rem;
+      }
+
+      .interest-block {
+        padding: 32px 20px;
+      }
+
+      .contact-title {
+        margin-bottom: 16px;
+      }
+
+      .contact-sub {
+        margin-bottom: 32px;
+      }
+
+      .contact-links {
+        gap: 8px;
+        margin-bottom: 32px;
+      }
+
+      .contact-link {
+        padding: 8px 14px;
+        font-size: 0.62rem;
+      }
+
+      .contact-email {
+        font-size: 0.95rem;
+      }
+
+      footer {
+        font-size: 0.6rem;
+      }
+    }
+
     @keyframes spin {
       to {
         transform: rotate(360deg);
@@ -1078,14 +1229,23 @@
     </ul>
     <div style="display:flex;align-items:center;gap:16px;">
       <div class="nav-dot"></div>
-      <button class="nav-cv-btn" onclick="showCVPreview()">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark/light theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
           stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
-          <polyline points="7 10 12 15 17 10" />
-          <line x1="12" y1="15" x2="12" y2="3" />
+          <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
         </svg>
-        CV
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="4" />
+          <line x1="12" y1="1" x2="12" y2="3" />
+          <line x1="12" y1="21" x2="12" y2="23" />
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+          <line x1="1" y1="12" x2="3" y2="12" />
+          <line x1="21" y1="12" x2="23" y2="12" />
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+        </svg>
       </button>
     </div>
   </nav>
@@ -1142,7 +1302,7 @@
       <h2 class="section-title" style="margin-bottom: 32px;">What I <em>work</em> with</h2>
       <div class="skills-grid">
         <div class="skill-card">
-          <div class="skill-icon">🎨</div>
+          <!-- <div class="skill-icon">🎨</div> -->
           <div class="skill-name">Graphic Design</div>
           <div class="skill-tools">Adobe Illustrator · Canva</div>
           <div class="skill-bar">
@@ -1150,7 +1310,7 @@
           </div>
         </div>
         <div class="skill-card">
-          <div class="skill-icon">🤖</div>
+          <!-- <div class="skill-icon">🤖</div> -->
           <div class="skill-name">Machine Learning</div>
           <div class="skill-tools">Python · Scikit-learn</div>
           <div class="skill-bar">
@@ -1158,7 +1318,7 @@
           </div>
         </div>
         <div class="skill-card">
-          <div class="skill-icon">💻</div>
+          <!-- <div class="skill-icon">💻</div> -->
           <div class="skill-name">Programming</div>
           <div class="skill-tools">C · Python · HTML · CSS</div>
           <div class="skill-bar">
@@ -1166,7 +1326,7 @@
           </div>
         </div>
         <div class="skill-card">
-          <div class="skill-icon">🌐</div>
+          <!-- <div class="skill-icon">🌐</div> -->
           <div class="skill-name">Web Dev</div>
           <div class="skill-tools">HTML · CSS · Responsive UI</div>
           <div class="skill-bar">
@@ -1174,7 +1334,7 @@
           </div>
         </div>
         <div class="skill-card">
-          <div class="skill-icon">📂</div>
+          <!-- <div class="skill-icon">📂</div> -->
           <div class="skill-name">Version Control</div>
           <div class="skill-tools">Git · GitHub</div>
           <div class="skill-bar">
@@ -1182,7 +1342,7 @@
           </div>
         </div>
         <div class="skill-card">
-          <div class="skill-icon">✂️</div>
+          <!-- <div class="skill-icon">✂️</div> -->
           <div class="skill-name">Editing</div>
           <div class="skill-tools">CapCut · Canva</div>
           <div class="skill-bar">
@@ -1306,7 +1466,7 @@
             <div class="cert-provider">Coursera</div>
             <div class="cert-name">Started with Microsoft Excel</div>
             <div class="cert-desc">Foundational skills in Excel for data entry, spreadsheet management and data analysis
-              for business and academic tasks.</div>
+              for business and academic tasks. Focused on accuracy, efficiency and productivity.</div>
           </div>
         </div>
         <div class="cert-item">
@@ -1315,7 +1475,7 @@
             <div class="cert-provider">Ostad</div>
             <div class="cert-name">Fundamentals of Graphic Design</div>
             <div class="cert-desc">Training in layout, typography, color theory, visual composition and creative design
-              principles and techniques.</div>
+              principles. Focused on creating impactful and visually appealing designs.</div>
           </div>
         </div>
         <div class="cert-item">
@@ -1323,8 +1483,8 @@
           <div>
             <div class="cert-provider">UniAthena</div>
             <div class="cert-name">Basics of Machine Learning Algorithms</div>
-            <div class="cert-desc">Fundamental ML algorithms including supervised learning, model evaluation and data
-              analysis for predictive modeling and AI.</div>
+            <div class="cert-desc">Fundamental ML algorithms, including supervised learning, model evaluation and data
+              analysis for predictive modeling and AI. Developing intelligent, data-driven solutions effectively.</div>
           </div>
         </div>
       </div>
@@ -1372,7 +1532,8 @@
         <span class="interest-emoji">✍️</span>
         <div class="interest-name">Content Creation</div>
       </div>
-      <div class="interest-block" onclick="window.open('https://github.com/RohedOve/Through-My-Lens','_blank')" style="cursor:pointer;">
+      <div class="interest-block" onclick="window.open('https://github.com/RohedOve/Through-My-Lens','_blank')"
+        style="cursor:pointer;">
         <span class="interest-emoji">📷</span>
         <div class="interest-name">Photography</div>
       </div>
@@ -1393,11 +1554,11 @@
       <a href="https://mail.google.com/mail/?view=cm&to=rohedove23@gmail.com" target="_blank"
         class="contact-email">rohedove23@gmail.com</a>
       <div class="contact-links" style="margin-top:40px">
-        <a href="https://rohedove.netlify.app" target="_blank" class="contact-link">🌐 Website</a>
-        <a href="https://linkedin.com/in/rohed-ove" target="_blank" class="contact-link">💼 LinkedIn</a>
-        <a href="https://github.com/RohedOve" target="_blank" class="contact-link">🐱 GitHub</a>
-        <a href="https://behance.net/rohedove123" target="_blank" class="contact-link">🎨 Behance</a>
-        <a href="https://instagram.com/__the.writer___" target="_blank" class="contact-link">📸 Instagram</a>
+        <a href="https://rohedove.netlify.app" target="_blank" class="contact-link">Website</a>
+        <a href="https://linkedin.com/in/rohed-ove" target="_blank" class="contact-link">LinkedIn</a>
+        <a href="https://github.com/RohedOve" target="_blank" class="contact-link">GitHub</a>
+        <a href="https://behance.net/rohedove123" target="_blank" class="contact-link">Behance</a>
+        <a href="https://instagram.com/__the.writer___" target="_blank" class="contact-link">Instagram</a>
       </div>
     </div>
   </section>
@@ -1410,6 +1571,16 @@
   </footer>
 
   <script>
+    // Theme toggle
+    function toggleTheme() {
+      const html = document.documentElement;
+      if (html.getAttribute('data-theme') === 'light') {
+        html.removeAttribute('data-theme');
+      } else {
+        html.setAttribute('data-theme', 'light');
+      }
+    }
+
     // Cursor
     const cursor = document.getElementById('cursor');
     const ring = document.getElementById('cursorRing');
@@ -1582,5 +1753,3 @@
   </div>
 
 </body>
-
-</html>
