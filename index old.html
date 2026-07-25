@@ -204,38 +204,58 @@
     }
 
     .theme-toggle {
-      width: 36px;
-      height: 36px;
+      position: relative;
+      width: 60px;
+      height: 30px;
+      padding: 0;
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: space-between;
       border: 1px solid var(--border);
+      border-radius: 999px;
       color: var(--mid);
-      background: transparent;
+      background: var(--bg3);
       cursor: pointer;
-      transition: border-color 0.2s, color 0.2s;
+      transition: border-color 0.2s, background 0.3s;
     }
 
     .theme-toggle:hover {
       border-color: var(--accent);
-      color: var(--accent);
     }
 
     .theme-toggle svg {
-      width: 16px;
-      height: 16px;
+      width: 14px;
+      height: 14px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .theme-toggle .icon-moon {
+      margin-left: 7px;
+      color: var(--accent2);
     }
 
     .theme-toggle .icon-sun {
-      display: none;
+      margin-right: 7px;
+      color: var(--accent3);
     }
 
-    [data-theme="light"] .theme-toggle .icon-moon {
-      display: none;
+    .theme-toggle .toggle-thumb {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: transparent;
+      border: 1px solid var(--accent);
+      box-sizing: border-box;
+      transition: transform 0.3s cubic-bezier(.4, 0, .2, 1), border-color 0.3s;
+      z-index: 0;
     }
 
-    [data-theme="light"] .theme-toggle .icon-sun {
-      display: block;
+    [data-theme="light"] .theme-toggle .toggle-thumb {
+      transform: translateX(30px);
     }
 
     @keyframes pulse {
@@ -433,6 +453,171 @@
 
     .hero-socials a:hover {
       color: var(--accent);
+    }
+
+    /* HERO ORBIT VISUAL */
+    .hero-orbit {
+      position: absolute;
+      right: 350px;
+      top: 50%;
+      margin-top: -220px;
+      width: 440px;
+      height: 440px;
+      pointer-events: none;
+      opacity: 0;
+      animation: fadeUp 1s 1s forwards, floaty 6s 2s ease-in-out infinite;
+    }
+
+    .orbit-ring {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      opacity: 0.55;
+    }
+
+    .ring1 {
+      width: 440px;
+      height: 440px;
+      margin: -220px 0 0 -220px;
+      animation: spin 32s linear infinite;
+    }
+
+    .ring2 {
+      width: 320px;
+      height: 320px;
+      margin: -160px 0 0 -160px;
+      border-style: dashed;
+      animation: spin 24s linear infinite reverse;
+    }
+
+    .ring3 {
+      width: 200px;
+      height: 200px;
+      margin: -100px 0 0 -100px;
+      animation: spin 17s linear infinite;
+    }
+
+    .orbit-node {
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 7px 16px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      white-space: nowrap;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    }
+
+    .ring1 .orbit-node {
+      animation: counterspin 32s linear infinite;
+    }
+
+    .ring2 .orbit-node {
+      color: var(--accent3);
+      animation: counterspin 24s linear infinite reverse;
+    }
+
+    .ring3 .orbit-node {
+      animation: counterspin 17s linear infinite;
+    }
+
+    .orbit-core {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 120px;
+      height: 120px;
+      margin: -60px 0 0 -60px;
+      border-radius: 50%;
+      background: var(--bg2);
+      border: 1px solid var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      animation: corePulse 3.2s ease-in-out infinite;
+    }
+
+    .orbit-core img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .orbit-core .orbit-fallback {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.4rem;
+      letter-spacing: 0.03em;
+      color: var(--accent);
+    }
+
+    .orbit-dot {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent2);
+    }
+
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes counterspin {
+      from {
+        transform: translateX(-50%) rotate(0deg);
+      }
+
+      to {
+        transform: translateX(-50%) rotate(-360deg);
+      }
+    }
+
+    @keyframes floaty {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-14px);
+      }
+    }
+
+    @keyframes corePulse {
+
+      0%,
+      100% {
+        box-shadow: 0 0 0 0 rgba(137, 207, 240, 0.35);
+      }
+
+      50% {
+        box-shadow: 0 0 0 18px rgba(137, 207, 240, 0);
+      }
+    }
+
+    @media (max-width: 1360px) {
+      .hero-orbit {
+        display: none;
+      }
     }
 
     /* ABOUT / SKILLS */
@@ -634,6 +819,92 @@
       font-weight: 800;
       color: var(--border);
       line-height: 1;
+    }
+
+    /* EXPERIENCE */
+    #experience {
+      padding: 120px 60px;
+      border-top: 1px solid var(--border);
+    }
+
+    .exp-list {
+      margin-top: 40px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 5px;
+    }
+
+    .exp-item {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 24px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s, background 0.3s;
+    }
+
+    .exp-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 2px;
+      height: 100%;
+      background: linear-gradient(180deg, var(--accent), var(--accent2));
+      transform: scaleY(0);
+      transform-origin: top;
+      transition: transform 0.4s ease;
+    }
+
+    .exp-item:hover {
+      background: var(--surface);
+      border-color: rgba(74, 240, 196, 0.3);
+    }
+
+    .exp-item:hover::before {
+      transform: scaleY(1);
+    }
+
+    .exp-role {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+    }
+
+    .exp-company {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+      margin-bottom: 16px;
+    }
+
+    .exp-company span {
+      color: var(--muted);
+    }
+
+    .exp-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .exp-duration {
+      flex-shrink: 0;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap;
+      padding: 6px 14px;
+      border: 1px solid var(--border);
     }
 
     /* PROJECTS */
@@ -1050,6 +1321,20 @@
         grid-template-columns: 1fr;
       }
 
+      #experience {
+        padding: 80px 24px;
+      }
+
+      .exp-item {
+        flex-direction: column;
+        gap: 12px;
+        padding: 24px;
+      }
+
+      .exp-list {
+        grid-template-columns: 1fr;
+      }
+
       #projects {
         padding: 80px 24px;
       }
@@ -1122,11 +1407,20 @@
 
       #about,
       #education,
+      #experience,
       #projects,
       #courses,
       #interests,
       #contact {
         padding: 60px 18px;
+      }
+
+      .exp-item {
+        padding: 20px;
+      }
+
+      .exp-role {
+        font-size: 1.05rem;
       }
 
       .section-title {
@@ -1223,6 +1517,7 @@
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
       <li><a href="#education">Education</a></li>
+      <li><a href="#experience">Experience</a></li>
       <li><a href="#projects">Projects</a></li>
       <li><a href="#courses">Courses</a></li>
       <li><a href="#contact">Contact</a></li>
@@ -1230,6 +1525,7 @@
     <div style="display:flex;align-items:center;gap:16px;">
       <div class="nav-dot"></div>
       <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark/light theme">
+        <div class="toggle-thumb"></div>
         <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
           stroke-linecap="round" stroke-linejoin="round">
           <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
@@ -1280,6 +1576,22 @@
       <a href="https://linkedin.com/in/rohed-ove" target="_blank">LinkedIn</a>
       <a href="https://github.com/RohedOve" target="_blank">GitHub</a>
       <a href="https://behance.net/rohedove123" target="_blank">Behance</a>
+    </div>
+    <div class="hero-orbit" aria-hidden="true">
+      <div class="orbit-ring ring1">
+        <span class="orbit-node">AI/ML</span>
+      </div>
+      <div class="orbit-ring ring2">
+        <span class="orbit-node">Web Dev</span>
+      </div>
+      <div class="orbit-ring ring3">
+        <span class="orbit-node">Design</span>
+      </div>
+      <div class="orbit-core">
+        <img src="profile.jpg" alt="Rohed Deb Ove"
+          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <span class="orbit-fallback" style="display:none;">R.O</span>
+      </div>
     </div>
   </section>
 
@@ -1387,11 +1699,34 @@
     </div>
   </section>
 
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="reveal">
+      <div class="section-label" data-num="04">Experience</div>
+      <h2 class="section-title">Professional <em>experience</em></h2>
+    </div>
+    <div class="exp-list">
+      <div class="exp-item reveal">
+        <div style="width:100%;">
+          <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:12px 16px;margin-bottom:8px;">
+            <div class="exp-role" style="margin-bottom:0;">Machine Learning Intern</div>
+            <div class="exp-duration">Mar 2026 — Jun 2026</div>
+          </div>
+          <div class="exp-company">Codveda Technologies <span>· Internship</span></div>
+          <div class="exp-tags">
+            <span class="tag">Machine Learning</span>
+            <span class="tag">Artificial Intelligence (AI)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- PROJECTS -->
   <section id="projects">
     <div class="projects-header reveal">
       <div>
-        <div class="section-label" data-num="04">Projects</div>
+        <div class="section-label" data-num="05">Projects</div>
         <h2 class="section-title">Selected <em>work</em></h2>
       </div>
       <a href="https://rohedove.netlify.app" target="_blank" class="btn-ghost" style="white-space:nowrap">View Website
@@ -1457,7 +1792,7 @@
   <!-- COURSES & CERTS -->
   <section id="courses">
     <div class="reveal">
-      <div class="section-label" data-num="05">Courses</div>
+      <div class="section-label" data-num="06">Courses</div>
       <h2 class="section-title">Learning & <em>growth</em></h2>
       <div class="cert-list">
         <div class="cert-item">
@@ -1490,7 +1825,7 @@
       </div>
     </div>
     <div class="reveal">
-      <div class="section-label" data-num="06">Certificates</div>
+      <div class="section-label" data-num="07">Certificates</div>
       <h2 class="section-title">Verified <em>credentials</em></h2>
       <div class="cert-list" style="margin-top:32px">
         <a class="cert-item" href="https://coursera.org/share/8ea6208d966c9730d72a0758001437c4" target="_blank"
@@ -1524,7 +1859,7 @@
   <!-- INTERESTS -->
   <section id="interests">
     <div class="reveal">
-      <div class="section-label" data-num="07">Interests</div>
+      <div class="section-label" data-num="08">Interests</div>
       <h2 class="section-title">Beyond <em>code</em></h2>
     </div>
     <div class="interests-row reveal">
@@ -1547,7 +1882,7 @@
   <!-- CONTACT -->
   <section id="contact">
     <div class="contact-inner reveal">
-      <div class="section-label" data-num="08" style="justify-content:center">Contact</div>
+      <div class="section-label" data-num="09" style="justify-content:center">Contact</div>
       <h2 class="contact-title">Let's <span>build</span><br>something great</h2>
       <p class="contact-sub">Open to full-time roles, freelance projects and creative collaborations. If you have an
         interesting problem, I'd love to hear about it.</p>
