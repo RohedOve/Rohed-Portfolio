@@ -440,46 +440,60 @@
       height: 18px;
       border-radius: 50%;
       background: var(--cobalt);
+      z-index: 1;
+      transition: transform .4s cubic-bezier(.65, 0, .35, 1);
+    }
+
+    /* Moon is fixed on the left end of the track, sun fixed on the right end — neither ever moves */
+    .ts-icon {
+      position: absolute;
+      top: 6px;
+      width: 12px;
+      height: 12px;
+      z-index: 2;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: transform .45s cubic-bezier(.65, 0, .35, 1);
+      transition: color .25s ease;
     }
 
+    .ts-icon svg {
+      width: 12px;
+      height: 12px;
+    }
+
+    .ts-icon.icon-moon {
+      left: 5px;
+    }
+
+    .ts-icon.icon-sun {
+      right: 5px;
+    }
+
+    /* Dark theme: knob sits on the left (over the moon) */
     html[data-theme="dark"] .theme-switch-knob {
-      transform: translateX(21px) rotate(180deg);
+      transform: translateX(0);
     }
 
-    .theme-switch-icons {
-      position: relative;
-      width: 12px;
-      height: 12px;
-      transition: transform .45s cubic-bezier(.65, 0, .35, 1);
-    }
-
-    html[data-theme="dark"] .theme-switch-icons {
-      transform: rotate(-180deg);
-    }
-
-    .theme-switch-icons svg {
-      position: absolute;
-      inset: 0;
-      width: 12px;
-      height: 12px;
+    html[data-theme="dark"] .ts-icon.icon-moon {
       color: #fff;
-      transition: opacity .25s ease;
     }
 
-    .theme-switch-icons .icon-moon {
-      opacity: 0;
+    html[data-theme="dark"] .ts-icon.icon-sun {
+      color: var(--ink-soft);
     }
 
-    html[data-theme="dark"] .theme-switch-icons .icon-sun {
-      opacity: 0;
+    /* Light theme: knob slides to the right (over the sun) */
+    html[data-theme="light"] .theme-switch-knob {
+      transform: translateX(22px);
     }
 
-    html[data-theme="dark"] .theme-switch-icons .icon-moon {
-      opacity: 1;
+    html[data-theme="light"] .ts-icon.icon-sun {
+      color: #fff;
+    }
+
+    html[data-theme="light"] .ts-icon.icon-moon {
+      color: var(--ink-soft);
     }
 
     .menu-btn {
@@ -1650,7 +1664,7 @@
 
     .modal-frame.resume-frame {
       aspect-ratio: 8.5 / 11;
-      height: min(72vh, 760px);
+      height: min(78vh, 800px);
       width: auto;
     }
 
@@ -1985,18 +1999,19 @@
       </nav>
       <div class="nav-right">
         <button class="theme-switch" id="themeToggle" aria-label="Toggle dark mode">
-          <span class="theme-switch-knob">
-            <span class="theme-switch-icons">
-              <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
-                stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="4.2" />
-                <path d="M12 2.5v2.4M12 19.1v2.4M4.4 4.4l1.7 1.7M17.9 17.9l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.4 19.6l1.7-1.7M17.9 6.1l1.7-1.7" />
-              </svg>
-              <svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M20.8 14.3A8.6 8.6 0 1 1 9.7 3.2a7 7 0 0 0 11.1 11.1z" />
-              </svg>
-            </span>
+          <span class="ts-icon icon-moon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20.8 14.3A8.6 8.6 0 1 1 9.7 3.2a7 7 0 0 0 11.1 11.1z" />
+            </svg>
           </span>
+          <span class="ts-icon icon-sun" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+              stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="4.2" />
+              <path d="M12 2.5v2.4M12 19.1v2.4M4.4 4.4l1.7 1.7M17.9 17.9l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.4 19.6l1.7-1.7M17.9 6.1l1.7-1.7" />
+            </svg>
+          </span>
+          <span class="theme-switch-knob"></span>
         </button>
         <button class="menu-btn" id="menuBtn" aria-label="Open menu">
           <span></span><span></span>
@@ -2476,7 +2491,7 @@
       </div>
       <div id="resumeBody" style="display:flex;flex-direction:column;flex:1;min-height:0;">
         <iframe id="resumeFrame" class="modal-frame resume-frame"
-          src="Rohed_Resume.pdf#toolbar=0&navpanes=0&statusbar=0&view=Fit" title="Resume preview"></iframe>
+          src="Rohed_Resume.pdf#toolbar=0&navpanes=0&statusbar=0&view=FitH" title="Resume preview"></iframe>
       </div>
     </div>
   </div>
@@ -2750,7 +2765,12 @@
 
       /* ---------- RESUME MODAL ---------- */
       const modal = document.getElementById('resumeModal');
-      function openModal() { modal.classList.add('open'); document.body.style.overflow = 'hidden'; }
+      const resumeFrame = document.getElementById('resumeFrame');
+      function openModal() {
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        resumeFrame.src = 'Rohed_Resume.pdf#toolbar=0&navpanes=0&statusbar=0&view=FitH';
+      }
       function closeModal() { modal.classList.remove('open'); document.body.style.overflow = ''; }
       document.getElementById('openResume').addEventListener('click', openModal);
       document.getElementById('closeResume').addEventListener('click', closeModal);
