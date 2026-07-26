@@ -1663,9 +1663,28 @@
     }
 
     .modal-frame.resume-frame {
-      aspect-ratio: 8.5 / 11;
-      height: min(78vh, 800px);
-      width: auto;
+      width: min(720px, 88vw);
+      height: min(60vh, 640px);
+    }
+
+    .modal-fallback {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      gap: 1.1rem;
+      padding: 2rem 1.4rem;
+      background: var(--paper-alt);
+      color: var(--ink-soft);
+      font-size: .92rem;
+    }
+
+    .modal-fallback .btn-row {
+      display: flex;
+      gap: .7rem;
+      flex-wrap: wrap;
+      justify-content: center;
     }
 
     .modal-note {
@@ -1766,7 +1785,7 @@
       }
 
       .resume-preview {
-        width: 235px;
+        display: none;
       }
 
       .resume-band h2 {
@@ -2492,6 +2511,15 @@
       <div id="resumeBody" style="display:flex;flex-direction:column;flex:1;min-height:0;">
         <iframe id="resumeFrame" class="modal-frame resume-frame"
           src="Rohed_Resume.pdf#toolbar=0&navpanes=0&statusbar=0&view=FitH" title="Resume preview"></iframe>
+        <div id="resumeFallback" class="modal-frame resume-frame modal-fallback">
+          <p>PDF preview isn't supported on this device.</p>
+          <div class="btn-row">
+            <a href="Rohed_Resume.pdf" target="_blank" rel="noopener" class="btn btn-primary"
+              style="padding:.6rem 1.2rem;font-size:.75rem;">Open PDF</a>
+            <a href="Rohed_Resume.pdf" download="Rohed_Deb_Ove_Resume.pdf" class="btn btn-outline force-download"
+              style="padding:.6rem 1.2rem;font-size:.75rem;">Download PDF</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -2516,6 +2544,15 @@
         </div>
       </div>
       <iframe id="certFrame" class="modal-frame cert-frame" title="Certificate preview"></iframe>
+      <div id="certFallback" class="modal-frame cert-frame modal-fallback">
+        <p>PDF preview isn't supported on this device.</p>
+        <div class="btn-row">
+          <a id="certOpenBtn" href="#" target="_blank" rel="noopener" class="btn btn-primary"
+            style="padding:.6rem 1.2rem;font-size:.75rem;">Open PDF</a>
+          <a id="certFallbackDownload" href="#" download class="btn btn-outline force-download"
+            style="padding:.6rem 1.2rem;font-size:.75rem;">Download PDF</a>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -2763,13 +2800,30 @@
       document.getElementById('tNext').addEventListener('click', () => { next(); restartAuto(1); });
       document.getElementById('tPrev').addEventListener('click', () => { prev(); restartAuto(-1); });
 
+      /* ---------- MOBILE PDF-EMBED DETECTION ---------- */
+      /* Mobile browsers generally can't render a PDF inside an <iframe> — they either
+         show a blank frame or drop into their own download UI. On those devices we skip
+         the iframe embed entirely and show a fallback panel with Open/Download buttons. */
+      function isMobileDevice() {
+        return /Android|iPhone|iPad|iPod|Mobile|Windows Phone/i.test(navigator.userAgent);
+      }
+
       /* ---------- RESUME MODAL ---------- */
       const modal = document.getElementById('resumeModal');
       const resumeFrame = document.getElementById('resumeFrame');
+      const resumeFallback = document.getElementById('resumeFallback');
       function openModal() {
         modal.classList.add('open');
         document.body.style.overflow = 'hidden';
-        resumeFrame.src = 'Rohed_Resume.pdf#toolbar=0&navpanes=0&statusbar=0&view=FitH';
+        if (isMobileDevice()) {
+          resumeFrame.style.display = 'none';
+          resumeFrame.src = '';
+          resumeFallback.style.display = 'flex';
+        } else {
+          resumeFallback.style.display = 'none';
+          resumeFrame.style.display = '';
+          resumeFrame.src = 'Rohed_Resume.pdf#toolbar=0&navpanes=0&statusbar=0&view=FitH';
+        }
       }
       function closeModal() { modal.classList.remove('open'); document.body.style.overflow = ''; }
       document.getElementById('openResume').addEventListener('click', openModal);
@@ -2779,14 +2833,28 @@
       /* ---------- CERTIFICATE MODAL ---------- */
       const certModal = document.getElementById('certModal');
       const certFrame = document.getElementById('certFrame');
+      const certFallback = document.getElementById('certFallback');
+      const certOpenBtn = document.getElementById('certOpenBtn');
+      const certFallbackDownload = document.getElementById('certFallbackDownload');
       const certTitle = document.getElementById('certModalTitle');
       const certDownloadBtn = document.getElementById('certDownloadBtn');
       document.querySelectorAll('.cert-card').forEach(card => {
         card.addEventListener('click', () => {
-          certFrame.src = card.dataset.pdf + '#toolbar=0&navpanes=0&statusbar=0&view=Fit';
           certTitle.textContent = card.dataset.provider + ' — ' + card.dataset.title;
           certDownloadBtn.href = card.dataset.pdf;
           certDownloadBtn.setAttribute('download', card.dataset.title.replace(/\s+/g, '_') + '.pdf');
+          if (isMobileDevice()) {
+            certFrame.style.display = 'none';
+            certFrame.src = '';
+            certOpenBtn.href = card.dataset.pdf;
+            certFallbackDownload.href = card.dataset.pdf;
+            certFallbackDownload.setAttribute('download', card.dataset.title.replace(/\s+/g, '_') + '.pdf');
+            certFallback.style.display = 'flex';
+          } else {
+            certFallback.style.display = 'none';
+            certFrame.style.display = '';
+            certFrame.src = card.dataset.pdf + '#toolbar=0&navpanes=0&statusbar=0&view=Fit';
+          }
           certModal.classList.add('open');
           document.body.style.overflow = 'hidden';
         });
