@@ -203,6 +203,42 @@
       animation: pulse 2s infinite;
     }
 
+    /* Mobile nav toggle (hamburger) */
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      width: 36px;
+      height: 36px;
+      background: transparent;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      padding: 0;
+      flex-shrink: 0;
+    }
+
+    .nav-toggle span {
+      display: block;
+      width: 16px;
+      height: 1.5px;
+      background: var(--text);
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+
+    nav.nav-open .nav-toggle span:nth-child(1) {
+      transform: translateY(6.5px) rotate(45deg);
+    }
+
+    nav.nav-open .nav-toggle span:nth-child(2) {
+      opacity: 0;
+    }
+
+    nav.nav-open .nav-toggle span:nth-child(3) {
+      transform: translateY(-6.5px) rotate(-45deg);
+    }
+
     .theme-toggle {
       position: relative;
       width: 60px;
@@ -507,11 +543,11 @@
       top: -15px;
       left: 50%;
       transform: translateX(-50%);
-      padding: 4px 10px;
+      padding: 5px 12px;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 999px;
-      font-size: 0.4rem;
+      font-size: 0.85rem;
       font-weight: 500;
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -617,61 +653,192 @@
       }
     }
 
-    @media (max-width: 1360px) {
+    /* ============================================
+       RESPONSIVE BREAKPOINTS
+       Desktop:  1440px and up   (base styles below)
+       Laptop:   1024px – 1440px
+       Tablet:   768px  – 1024px
+       Mobile:   below 768px
+       ============================================ */
+
+    /* LAPTOP: 1024px – 1440px — scale text down + tuck the orbit visual */
+    @media (min-width: 1024px) and (max-width: 1440px) {
+      html {
+        font-size: 82%;
+        /* shrinks every rem-based text/element site-wide */
+      }
+
+      nav {
+        padding: 18px 44px;
+      }
+
+      .hero-inner {
+        max-width: 620px;
+      }
+
+      .hero-name {
+        font-size: clamp(2.6rem, 4.6vw, 4.6rem);
+      }
+
+      .hero-orbit {
+        right: 40px;
+        width: 340px;
+        height: 340px;
+        margin-top: -170px;
+      }
+
+      .ring1 {
+        width: 340px;
+        height: 340px;
+        margin: -170px 0 0 -170px;
+      }
+
+      .ring2 {
+        width: 245px;
+        height: 245px;
+        margin: -122px 0 0 -122px;
+      }
+
+      .ring3 {
+        width: 160px;
+        height: 160px;
+        margin: -80px 0 0 -80px;
+      }
+
+      .orbit-core {
+        width: 88px;
+        height: 88px;
+        margin: -44px 0 0 -44px;
+      }
+
+      .orbit-node {
+        font-size: 1rem;
+        padding: 5px 12px;
+      }
+
+      #about,
+      #education,
+      #experience,
+      #projects,
+      #courses,
+      #contact {
+        padding: 100px 44px;
+      }
+
+      #interests {
+        padding: 70px 44px 100px;
+      }
+    }
+
+    /* Hide the orbit visual once there isn't room beside the hero text */
+    @media (max-width: 1180px) {
       .hero-orbit {
         display: none;
       }
     }
 
-    /* Laptop range: scale all text down + tuck the orbit visual */
-    @media (min-width: 1361px) and (max-width: 1980px) {
-      html {
-        font-size: 70%;
-        /* shrinks every rem-based text/element site-wide */
+    /* TABLET: 768px – 1024px */
+    @media (min-width: 768px) and (max-width: 1024px) {
+      nav {
+        padding: 18px 32px;
+      }
+
+      .nav-links {
+        gap: 22px;
+      }
+
+      .nav-links a {
+        font-size: 0.7rem;
+      }
+
+      #hero {
+        padding: 110px 40px 70px;
       }
 
       .hero-inner {
-        max-width: 600px;
+        max-width: 560px;
       }
 
       .hero-name {
-        font-size: clamp(2.3rem, 3.6vw, 3.8rem);
+        font-size: clamp(2.6rem, 6vw, 4rem);
       }
 
-      .hero-orbit {
-        right: 320px;
-        width: 320px;
-        height: 320px;
-        margin-top: -160px;
+      .hero-bio {
+        max-width: 460px;
       }
 
-      .ring1 {
-        width: 320px;
-        height: 320px;
-        margin: -160px 0 0 -160px;
+      .hero-socials {
+        right: 40px;
+        bottom: 60px;
+        gap: 36px;
       }
 
-      .ring2 {
-        width: 230px;
-        height: 230px;
-        margin: -115px 0 0 -115px;
+      #about {
+        padding: 90px 40px;
+        grid-template-columns: 1fr;
+        gap: 56px;
       }
 
-      .ring3 {
-        width: 150px;
-        height: 150px;
-        margin: -75px 0 0 -75px;
+      .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
       }
 
-      .orbit-core {
-        width: 84px;
-        height: 84px;
-        margin: -42px 0 0 -42px;
+      #education {
+        padding: 90px 40px;
       }
 
-      .orbit-node {
-        font-size: 0.4rem;
-        padding: 4px 10px;
+      .edu-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+      }
+
+      #experience {
+        padding: 90px 40px;
+      }
+
+      .exp-list {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+
+      .exp-item {
+        padding: 28px;
+      }
+
+      #projects {
+        padding: 90px 40px;
+      }
+
+      .projects-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+
+      .project-card {
+        padding: 36px 28px;
+      }
+
+      #courses {
+        padding: 90px 40px;
+        grid-template-columns: 1fr;
+        gap: 56px;
+      }
+
+      #interests {
+        padding: 60px 40px 90px;
+      }
+
+      .interests-row {
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+
+      .interest-block {
+        flex: 1 1 calc(50% - 12px);
+      }
+
+      #contact {
+        padding: 90px 40px;
       }
     }
 
@@ -1497,8 +1664,46 @@
         padding: 16px 24px;
       }
 
+      .nav-toggle {
+        display: flex;
+      }
+
       .nav-links {
-        display: none;
+        position: fixed;
+        top: 65px;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        gap: 0;
+        background: var(--nav-scroll-bg);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--border);
+        padding: 8px 24px 20px;
+        transform: translateY(-12px);
+        opacity: 0;
+        pointer-events: none;
+        transition: transform 0.25s ease, opacity 0.2s ease;
+        z-index: 99;
+      }
+
+      .nav-links li {
+        width: 100%;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .nav-links li:last-child {
+        border-bottom: none;
+      }
+
+      .nav-links a {
+        display: block;
+        padding: 16px 0;
+      }
+
+      nav.nav-open .nav-links {
+        transform: translateY(0);
+        opacity: 1;
+        pointer-events: auto;
       }
 
       #hero {
@@ -1756,6 +1961,9 @@
           <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
           <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
         </svg>
+      </button>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
       </button>
     </div>
   </nav>
@@ -2222,6 +2430,19 @@
     const nav = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
       nav.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // Mobile nav toggle
+    const navToggle = document.getElementById('navToggle');
+    navToggle.addEventListener('click', () => {
+      const isOpen = nav.classList.toggle('nav-open');
+      navToggle.setAttribute('aria-expanded', isOpen);
+    });
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        nav.classList.remove('nav-open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      });
     });
 
     // Reveal on scroll
