@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<!-- DEFAULT THEME: change data-theme below to "dark" or "light" to set which mode loads first -->
+<html lang="en" data-theme="dark">
 
 <head>
   <meta charset="UTF-8">
@@ -136,7 +137,6 @@
     section {
       position: relative;
       padding: clamp(4rem, 10vw, 8rem) 0;
-      scroll-margin-top: 50px;
     }
 
     h1,
@@ -424,14 +424,15 @@
       width: 46px;
       height: 24px;
       border-radius: 20px;
-      background: var(--paper-alt);
+      background: transparent;
       border: 1px solid var(--line);
       position: relative;
       flex-shrink: 0;
+      padding: 0;
+      cursor: pointer;
     }
 
-    .theme-switch::before {
-      content: '';
+    .theme-switch-knob {
       position: absolute;
       top: 2px;
       left: 2px;
@@ -439,11 +440,46 @@
       height: 18px;
       border-radius: 50%;
       background: var(--cobalt);
-      transition: transform .35s cubic-bezier(.65, 0, .35, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform .45s cubic-bezier(.65, 0, .35, 1);
     }
 
-    html[data-theme="dark"] .theme-switch::before {
-      transform: translateX(21px);
+    html[data-theme="dark"] .theme-switch-knob {
+      transform: translateX(21px) rotate(180deg);
+    }
+
+    .theme-switch-icons {
+      position: relative;
+      width: 12px;
+      height: 12px;
+      transition: transform .45s cubic-bezier(.65, 0, .35, 1);
+    }
+
+    html[data-theme="dark"] .theme-switch-icons {
+      transform: rotate(-180deg);
+    }
+
+    .theme-switch-icons svg {
+      position: absolute;
+      inset: 0;
+      width: 12px;
+      height: 12px;
+      color: #fff;
+      transition: opacity .25s ease;
+    }
+
+    .theme-switch-icons .icon-moon {
+      opacity: 0;
+    }
+
+    html[data-theme="dark"] .theme-switch-icons .icon-sun {
+      opacity: 0;
+    }
+
+    html[data-theme="dark"] .theme-switch-icons .icon-moon {
+      opacity: 1;
     }
 
     .menu-btn {
@@ -645,9 +681,9 @@
     }
 
     .scroll-indicator {
-      position: absolute;
+      position: fixed;
       bottom: 2.4rem;
-      left: clamp(1.25rem, 4vw, 3rem);
+      right: clamp(1.25rem, 4vw, 3rem);
       display: flex;
       align-items: center;
       gap: .8rem;
@@ -656,6 +692,7 @@
       letter-spacing: .1em;
       text-transform: uppercase;
       color: var(--ink-soft);
+      z-index: 400;
     }
 
     .scroll-indicator .line {
@@ -663,6 +700,40 @@
       height: 40px;
       background: linear-gradient(var(--cobalt), transparent);
       animation: scrollpulse 1.8s ease-in-out infinite;
+    }
+
+    .scroll-top-btn {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      border: 1px solid var(--line);
+      background: var(--card-bg);
+      color: var(--ink);
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      transition: border-color .3s ease, transform .3s ease;
+    }
+
+    .scroll-top-btn:hover {
+      border-color: var(--cobalt);
+      transform: translateY(-3px);
+    }
+
+    .scroll-top-btn svg {
+      width: 17px;
+      height: 17px;
+    }
+
+    .scroll-indicator.scrolled-down .line,
+    .scroll-indicator.scrolled-down .scroll-label {
+      display: none;
+    }
+
+    .scroll-indicator.scrolled-down .scroll-top-btn {
+      display: flex;
     }
 
     @keyframes scrollpulse {
@@ -1190,12 +1261,41 @@
     }
 
     .cert-card {
+      position: relative;
+      overflow: hidden;
       background: var(--card-bg);
       border: 1px solid var(--line);
       border-radius: var(--radius);
-      padding: 1.7rem;
       cursor: pointer;
       transition: border-color .3s ease, transform .3s ease;
+      aspect-ratio: 3/2;
+    }
+
+    .cert-bg {
+      position: absolute;
+      inset: 0;
+    }
+
+    .cert-bg iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      pointer-events: none;
+      filter: blur(7px) saturate(1.05);
+      transform: scale(1.18);
+    }
+
+    .cert-content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 1.7rem;
+      background: linear-gradient(180deg, color-mix(in srgb, var(--card-bg) 40%, transparent) 0%, color-mix(in srgb, var(--card-bg) 88%, transparent) 45%, color-mix(in srgb, var(--card-bg) 88%, transparent) 100%);
     }
 
     .cert-card:hover {
@@ -1241,7 +1341,7 @@
     /* ============ RESUME ============ */
     .resume-band {
       display: grid;
-      grid-template-columns: 1.1fr .9fr;
+      grid-template-columns: 1.35fr .65fr;
       gap: 3rem;
       align-items: center;
       background: var(--paper-alt);
@@ -1250,26 +1350,29 @@
     }
 
     .resume-band h2 {
-      font-size: clamp(1.8rem, 3vw, 2.6rem);
-      margin-bottom: 1rem;
+      font-size: clamp(2.2rem, 3.8vw, 3.2rem);
+      margin-bottom: 1.1rem;
     }
 
     .resume-band p {
       color: var(--ink-soft);
       max-width: 48ch;
+      font-size: clamp(1rem, 1.4vw, 1.15rem);
       margin-bottom: 1.8rem;
     }
 
     .resume-preview {
       aspect-ratio: 3/4;
+      width: 190px;
+      margin-inline: auto;
       background: var(--card-bg);
       border: 1px solid var(--line);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      padding: 1.6rem;
+      padding: 1.2rem;
       display: flex;
       flex-direction: column;
-      gap: .5rem;
+      gap: .4rem;
       transform: rotate(1.4deg);
     }
 
@@ -1440,8 +1543,8 @@
       position: fixed;
       inset: 0;
       z-index: 800;
-      background: rgba(10, 11, 16, .6);
-      backdrop-filter: blur(6px);
+      background: rgba(10, 11, 16, .68);
+      backdrop-filter: blur(16px);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1465,6 +1568,8 @@
       padding: 2.2rem;
       transform: translateY(20px) scale(.98);
       transition: transform .4s cubic-bezier(.22, 1, .36, 1);
+      display: flex;
+      flex-direction: column;
     }
 
     .modal-overlay.open .modal-box {
@@ -1478,6 +1583,7 @@
       margin-bottom: 1.4rem;
       gap: 1rem;
       flex-wrap: wrap;
+      flex-shrink: 0;
     }
 
     .modal-head h3 {
@@ -1529,10 +1635,23 @@
     }
 
     .modal-frame {
-      width: 100%;
-      height: 65vh;
       border: 1px solid var(--line);
       border-radius: 2px;
+      background: var(--card-bg);
+      align-self: center;
+      max-width: 100%;
+    }
+
+    .modal-frame.cert-frame {
+      aspect-ratio: 11 / 8.5;
+      height: min(64vh, 560px);
+      width: auto;
+    }
+
+    .modal-frame.resume-frame {
+      aspect-ratio: 8.5 / 11;
+      height: min(72vh, 760px);
+      width: auto;
     }
 
     .modal-note {
@@ -1554,10 +1673,6 @@
 
       .modal-box-wide {
         width: 92vw;
-      }
-
-      .modal-frame {
-        height: 62vh;
       }
     }
 
@@ -1581,10 +1696,6 @@
 
       .modal-head h3 {
         font-size: 1rem;
-      }
-
-      .modal-frame {
-        height: 60vh;
       }
     }
 
@@ -1612,24 +1723,46 @@
         padding: clamp(3rem, 8vw, 6rem) 0;
       }
 
-      #resume,
+      #resume {
+        padding: clamp(2.2rem, 5vw, 3.4rem) 0;
+      }
+
       #contact {
         padding: clamp(1.6rem, 4vw, 2.6rem) 0;
       }
 
+      .hero-cta .btn {
+        padding: .7rem 1.25rem;
+        font-size: .72rem;
+        gap: .45rem;
+      }
+
+      .hero-cta {
+        gap: 1rem;
+      }
+
+      .hero-cta .btn svg {
+        width: 12px;
+        height: 12px;
+      }
+
       .resume-band {
-        padding: clamp(1.4rem, 3vw, 2rem);
-        gap: 2rem;
+        padding: clamp(2.2rem, 4vw, 3rem);
+        gap: 2.8rem;
+      }
+
+      .resume-preview {
+        width: 235px;
       }
 
       .resume-band h2 {
-        font-size: clamp(1.4rem, 2.2vw, 1.8rem);
-        margin-bottom: .6rem;
+        font-size: clamp(2.2rem, 3.2vw, 2.7rem);
+        margin-bottom: 1rem;
       }
 
       .resume-band p {
-        font-size: .85rem;
-        margin-bottom: 1rem;
+        font-size: 1.1rem;
+        margin-bottom: 1.6rem;
       }
 
       .contact-grid h2 {
@@ -1664,10 +1797,6 @@
         min-height: 56px;
       }
 
-      #courses {
-        padding: clamp(1.6rem, 4vw, 2.6rem) 0;
-      }
-
       #courses .t-track {
         margin-top: .8rem !important;
       }
@@ -1698,7 +1827,7 @@
         gap: 1rem;
       }
 
-      .cert-card {
+      .cert-content {
         padding: 1.1rem;
       }
 
@@ -1745,7 +1874,7 @@
       }
 
       .resume-preview {
-        max-width: 280px;
+        width: 210px;
         justify-self: center;
         order: -1;
       }
@@ -1855,7 +1984,20 @@
         <a href="#contact">Contact</a>
       </nav>
       <div class="nav-right">
-        <button class="theme-switch" id="themeToggle" aria-label="Toggle dark mode"></button>
+        <button class="theme-switch" id="themeToggle" aria-label="Toggle dark mode">
+          <span class="theme-switch-knob">
+            <span class="theme-switch-icons">
+              <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="4.2" />
+                <path d="M12 2.5v2.4M12 19.1v2.4M4.4 4.4l1.7 1.7M17.9 17.9l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.4 19.6l1.7-1.7M17.9 6.1l1.7-1.7" />
+              </svg>
+              <svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.8 14.3A8.6 8.6 0 1 1 9.7 3.2a7 7 0 0 0 11.1 11.1z" />
+              </svg>
+            </span>
+          </span>
+        </button>
         <button class="menu-btn" id="menuBtn" aria-label="Open menu">
           <span></span><span></span>
         </button>
@@ -1902,8 +2044,16 @@
           <div class="locale">Based in Chattogram, Bangladesh</div>
         </div>
       </div>
-      <div class="scroll-indicator">
-        <div class="line"></div>Scroll
+      <div class="scroll-indicator" id="scrollIndicator">
+        <div class="line"></div>
+        <span class="scroll-label">Scroll</span>
+        <button class="scroll-top-btn" id="scrollTopBtn" aria-label="Back to top" data-cursor="Top">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path d="M12 19V5" />
+            <path d="M5 12l7-7 7 7" />
+          </svg>
+        </button>
       </div>
     </section>
 
@@ -2150,21 +2300,39 @@
         <div class="cert-grid">
           <div class="cert-card reveal" data-pdf="Certificate/Microsoft_Excel_Fundamentals.pdf"
             data-title="Microsoft Excel Fundamentals" data-provider="Coursera Certified">
-            <div class="cert-provider">Coursera Certified</div>
-            <div class="cert-name">Microsoft Excel Fundamentals</div>
-            <div class="cert-preview-link">Preview certificate ↗</div>
+            <div class="cert-bg">
+              <iframe src="Certificate/Microsoft_Excel_Fundamentals.pdf#toolbar=0&navpanes=0&statusbar=0&view=FitH"
+                tabindex="-1" loading="lazy" title="Microsoft Excel Fundamentals certificate preview"></iframe>
+            </div>
+            <div class="cert-content">
+              <div class="cert-provider">Coursera Certified</div>
+              <div class="cert-name">Microsoft Excel Fundamentals</div>
+              <div class="cert-preview-link">Preview certificate ↗</div>
+            </div>
           </div>
           <div class="cert-card reveal" data-pdf="Certificate/Graphic_Design_Principles.pdf"
             data-title="Graphic Design Principles" data-provider="Ostad Certified">
-            <div class="cert-provider">Ostad Certified</div>
-            <div class="cert-name">Graphic Design Principles</div>
-            <div class="cert-preview-link">Preview certificate ↗</div>
+            <div class="cert-bg">
+              <iframe src="Certificate/Graphic_Design_Principles.pdf#toolbar=0&navpanes=0&statusbar=0&view=FitH"
+                tabindex="-1" loading="lazy" title="Graphic Design Principles certificate preview"></iframe>
+            </div>
+            <div class="cert-content">
+              <div class="cert-provider">Ostad Certified</div>
+              <div class="cert-name">Graphic Design Principles</div>
+              <div class="cert-preview-link">Preview certificate ↗</div>
+            </div>
           </div>
           <div class="cert-card reveal" data-pdf="Certificate/Machine_Learning_Algorithms.pdf"
             data-title="Machine Learning Algorithms" data-provider="UniAthena Certified">
-            <div class="cert-provider">UniAthena Certified</div>
-            <div class="cert-name">Machine Learning Algorithms</div>
-            <div class="cert-preview-link">Preview certificate ↗</div>
+            <div class="cert-bg">
+              <iframe src="Certificate/Machine_Learning_Algorithms.pdf#toolbar=0&navpanes=0&statusbar=0&view=FitH"
+                tabindex="-1" loading="lazy" title="Machine Learning Algorithms certificate preview"></iframe>
+            </div>
+            <div class="cert-content">
+              <div class="cert-provider">UniAthena Certified</div>
+              <div class="cert-name">Machine Learning Algorithms</div>
+              <div class="cert-preview-link">Preview certificate ↗</div>
+            </div>
           </div>
         </div>
       </div>
@@ -2306,9 +2474,9 @@
           <button class="modal-close" id="closeResume">✕</button>
         </div>
       </div>
-      <div id="resumeBody">
-        <iframe id="resumeFrame" class="modal-frame" style="height:75vh;"
-          src="Rohed_Resume.pdf#toolbar=0&navpanes=0&statusbar=0&messages=0" title="Resume preview"></iframe>
+      <div id="resumeBody" style="display:flex;flex-direction:column;flex:1;min-height:0;">
+        <iframe id="resumeFrame" class="modal-frame resume-frame"
+          src="Rohed_Resume.pdf#toolbar=0&navpanes=0&statusbar=0&view=Fit" title="Resume preview"></iframe>
       </div>
     </div>
   </div>
@@ -2332,7 +2500,7 @@
           <button class="modal-close" id="closeCert">✕</button>
         </div>
       </div>
-      <iframe id="certFrame" class="modal-frame" title="Certificate preview"></iframe>
+      <iframe id="certFrame" class="modal-frame cert-frame" title="Certificate preview"></iframe>
     </div>
   </div>
 
@@ -2406,6 +2574,27 @@
       window.addEventListener('scroll', () => {
         header.classList.toggle('scrolled', window.scrollY > 40);
       }, { passive: true });
+
+      /* ---------- CENTER RESUME SECTION ON "VIEW CV" CLICK ---------- */
+      document.querySelectorAll('a[href="#resume"]').forEach(a => {
+        a.addEventListener('click', e => {
+          e.preventDefault();
+          const el = document.getElementById('resume');
+          const rect = el.getBoundingClientRect();
+          const targetY = window.scrollY + rect.top + (rect.height / 2) - (window.innerHeight / 2);
+          window.scrollTo({ top: Math.max(targetY, 0), behavior: 'smooth' });
+        });
+      });
+
+      /* ---------- SCROLL INDICATOR -> BACK TO TOP ---------- */
+      const scrollIndicator = document.getElementById('scrollIndicator');
+      const scrollTopBtn = document.getElementById('scrollTopBtn');
+      window.addEventListener('scroll', () => {
+        scrollIndicator.classList.toggle('scrolled-down', window.scrollY > window.innerHeight * 0.5);
+      }, { passive: true });
+      scrollTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
 
       /* ---------- MOBILE MENU ---------- */
       const mobileMenu = document.getElementById('mobileMenu');
@@ -2574,7 +2763,7 @@
       const certDownloadBtn = document.getElementById('certDownloadBtn');
       document.querySelectorAll('.cert-card').forEach(card => {
         card.addEventListener('click', () => {
-          certFrame.src = card.dataset.pdf + '#toolbar=0&navpanes=0&statusbar=0&messages=0';
+          certFrame.src = card.dataset.pdf + '#toolbar=0&navpanes=0&statusbar=0&view=Fit';
           certTitle.textContent = card.dataset.provider + ' — ' + card.dataset.title;
           certDownloadBtn.href = card.dataset.pdf;
           certDownloadBtn.setAttribute('download', card.dataset.title.replace(/\s+/g, '_') + '.pdf');
