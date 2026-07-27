@@ -1161,6 +1161,7 @@
     .stat {
       padding: 2.4rem 1.4rem;
       border-right: 1px solid var(--line);
+      text-align: center;
     }
 
     .stat:last-child {
@@ -1181,6 +1182,57 @@
       text-transform: uppercase;
       color: var(--ink-soft);
       margin-top: .3rem;
+    }
+
+    /* ============ INTERESTS ============ */
+    .interests-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .interest-card {
+      display: block;
+      padding: 2.4rem 1.4rem;
+      text-align: center;
+      border-right: 1px solid var(--line);
+      transition: border-color .3s ease, background .3s ease;
+    }
+
+    .interest-card:last-child {
+      border-right: none;
+    }
+
+    .interest-card:hover {
+      background: var(--paper-alt);
+      border-color: var(--cobalt);
+    }
+
+    .interest-icon {
+      font-size: 2.1rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .interest-label {
+      font-family: var(--font-sans);
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    @media (max-width:768px) {
+      .interests-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .interest-card {
+        border-right: none;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .interest-card:last-child {
+        border-bottom: none;
+      }
     }
 
     /* ============ COURSES CAROUSEL ============ */
@@ -1617,6 +1669,19 @@
       border: 1px solid var(--line);
       border-radius: 50%;
       flex-shrink: 0;
+    }
+
+    .modal-actions {
+      display: flex;
+      align-items: center;
+      gap: .7rem;
+    }
+
+    @media (max-width:640px) {
+      .modal-actions {
+        width: 100%;
+        justify-content: flex-end;
+      }
     }
 
     .doc-mock {
@@ -2345,27 +2410,32 @@
       </div>
     </section>
 
-    <!-- STATS -->
-    <div class="container">
-      <div class="stats-bar reveal">
-        <div class="stat">
-          <div class="num" data-count="4">0</div>
-          <div class="label">Projects Shipped</div>
+    <!-- INTERESTS -->
+    <section id="interests">
+      <div class="container">
+        <div class="section-head interests-head reveal">
+          <div>
+            <span class="eyebrow">Interests</span>
+            <h2>Beyond Code</h2>
+          </div>
         </div>
-        <div class="stat">
-          <div class="num" data-count="3">0</div>
-          <div class="label">Certifications Earned</div>
-        </div>
-        <div class="stat">
-          <div class="num" data-count="1">0</div>
-          <div class="label">Internship Completed</div>
-        </div>
-        <div class="stat">
-          <div class="num-static">&infin;</div>
-          <div class="label">CUPS OF COFFEE</div>
+        <div class="interests-grid reveal">
+          <div class="interest-card">
+            <div class="interest-icon">✍️</div>
+            <div class="interest-label">Content Creation</div>
+          </div>
+          <a class="interest-card" href="https://github.com/RohedOve/Through-My-Lens" target="_blank"
+            rel="noopener" data-cursor="Open">
+            <div class="interest-icon">📷</div>
+            <div class="interest-label">Photography</div>
+          </a>
+          <div class="interest-card">
+            <div class="interest-icon">📚</div>
+            <div class="interest-label">Reading Books</div>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
 
     <!-- COURSES -->
     <section id="courses">
@@ -2449,6 +2519,28 @@
         </div>
       </div>
     </section>
+
+    <!-- STATS -->
+    <div class="container">
+      <div class="stats-bar reveal">
+        <div class="stat">
+          <div class="num" data-count="4">0</div>
+          <div class="label">Projects Shipped</div>
+        </div>
+        <div class="stat">
+          <div class="num" data-count="3">0</div>
+          <div class="label">Certifications Earned</div>
+        </div>
+        <div class="stat">
+          <div class="num" data-count="1">0</div>
+          <div class="label">Internship Completed</div>
+        </div>
+        <div class="stat">
+          <div class="num-static">&infin;</div>
+          <div class="label">CUPS OF COFFEE</div>
+        </div>
+      </div>
+    </div>
 
     <!-- RESUME -->
     <section id="resume">
@@ -2578,7 +2670,7 @@
     <div class="modal-box modal-box-wide">
       <div class="modal-head">
         <h3>Resume — Rohed Deb Ove</h3>
-        <div style="display:flex;align-items:center;gap:.7rem;">
+        <div class="modal-actions">
           <a href="Rohed_Resume.pdf" download="Rohed_Deb_Ove_Resume.pdf" class="btn btn-primary force-download"
             style="padding:.55rem 1.1rem;font-size:.7rem;">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
@@ -2616,7 +2708,7 @@
     <div class="modal-box">
       <div class="modal-head">
         <h3 id="certModalTitle">Certificate</h3>
-        <div style="display:flex;align-items:center;gap:.7rem;">
+        <div class="modal-actions">
           <a id="certDownloadBtn" href="#" download class="btn btn-primary force-download"
             style="padding:.55rem 1.1rem;font-size:.7rem;">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
