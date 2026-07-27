@@ -1592,6 +1592,209 @@
       min-height: 80px;
     }
 
+    /* ============ SEND BUTTON (contact form) ============ */
+    .button {
+      --primary: var(--amber);
+      --neutral-1: var(--ink);
+      --neutral-2: #05060a;
+      --radius: 100px;
+
+      cursor: pointer;
+      border-radius: var(--radius);
+      text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+      border: none;
+      box-shadow: 0 0.5px 0.5px 1px rgba(0, 0, 0, 0.2),
+        0 10px 20px rgba(0, 0, 0, 0.2), 0 4px 5px 0px rgba(0, 0, 0, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      transition: all 0.3s ease;
+      min-width: 190px;
+      padding: 0 1.7rem;
+      height: 56px;
+      font-family: var(--font-mono);
+      font-style: normal;
+      font-size: .8rem;
+      letter-spacing: .04em;
+      font-weight: 600;
+      color: #ffffff;
+      background: var(--neutral-1);
+    }
+
+    html[data-theme="dark"] .button {
+      --neutral-1: var(--cobalt);
+      --neutral-2: var(--cobalt-deep);
+    }
+
+    .button:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 1px 2px rgba(255, 255, 255, 0.3),
+        0 15px 30px rgba(0, 0, 0, 0.3), 0 10px 3px -3px rgba(0, 0, 0, 0.04);
+    }
+
+    .button:active {
+      transform: scale(1);
+      box-shadow: 0 0 1px 2px rgba(255, 255, 255, 0.3),
+        0 10px 3px -3px rgba(0, 0, 0, 0.2);
+    }
+
+    .button:disabled {
+      cursor: default;
+      opacity: .85;
+    }
+
+    .button::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius);
+      border: 2.5px solid transparent;
+      background: linear-gradient(var(--neutral-1), var(--neutral-2)) padding-box,
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.45)) border-box;
+      z-index: 0;
+      transition: all 0.4s ease;
+    }
+
+    .button:hover::after {
+      transform: scale(1.05, 1.1);
+      box-shadow: inset 0 -1px 3px 0 rgba(50, 50, 50, 1);
+    }
+
+    .button::before {
+      content: "";
+      inset: 6px;
+      position: absolute;
+      background: linear-gradient(to top, var(--neutral-1), var(--neutral-2));
+      border-radius: 30px;
+      filter: blur(0.5px);
+      z-index: 1;
+    }
+
+    .button .state p {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .button .state .icon {
+      position: relative;
+      margin-right: 8px;
+      transform: scale(1.1);
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .button .state .icon svg {
+      overflow: visible;
+    }
+
+    .button .state--sent .icon svg { color: #4ade80; }
+    .button .state--failed .icon svg { color: #ff6b6b; }
+
+    /* Outline sweep on hover */
+    .button .outline {
+      position: absolute;
+      border-radius: inherit;
+      overflow: hidden;
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      inset: -2px -3.5px;
+    }
+
+    .button .outline::before {
+      content: "";
+      position: absolute;
+      inset: -100%;
+      background: conic-gradient(from 180deg, transparent 60%, rgb(22, 22, 22) 80%, transparent 100%);
+      animation: btn-spin 2s linear infinite;
+      animation-play-state: paused;
+    }
+
+    @keyframes btn-spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .button:hover .outline { opacity: 1; }
+    .button:hover .outline::before { animation-play-state: running; }
+
+    /* Letters */
+    .button .state p span {
+      display: inline-block;
+      opacity: 0;
+      animation: btn-slideDown 0.6s ease forwards calc(var(--i) * 0.02s);
+    }
+
+    .button:hover:not(:disabled) .state--default p span {
+      opacity: 1;
+      animation: btn-wave 0.5s ease forwards calc(var(--i) * 0.02s);
+    }
+
+    @keyframes btn-wave {
+      30% { opacity: 1; transform: translateY(4px); }
+      50% { opacity: 1; transform: translateY(-3px); color: var(--primary); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes btn-slideDown {
+      0% {
+        opacity: 0;
+        transform: translateY(-20px) translateX(5px) rotate(-90deg);
+        color: var(--primary);
+        filter: blur(5px);
+      }
+      30% { opacity: 1; transform: translateY(4px) translateX(0) rotate(0); filter: blur(0); }
+      50% { opacity: 1; transform: translateY(-3px) translateX(0) rotate(0); }
+      100% { opacity: 1; transform: translateY(0) translateX(0) rotate(0); }
+    }
+
+    @keyframes btn-appear {
+      0% { opacity: 0; transform: scale(2.4) rotate(-40deg); color: var(--primary); filter: blur(4px); }
+      30% { opacity: 1; transform: scale(0.7); filter: blur(1px); }
+      50% { opacity: 1; transform: scale(1.15); filter: blur(0); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    /* States */
+    .button .state {
+      z-index: 2;
+      display: flex;
+      position: relative;
+    }
+
+    .button .state--sent,
+    .button .state--failed {
+      display: none;
+    }
+
+    /* Sent state active */
+    .button.is-sent .state--default { display: none; }
+    .button.is-sent .state--sent { display: flex; }
+    .button.is-sent .state--sent p span {
+      opacity: 0;
+      animation: btn-slideDown 0.6s ease forwards calc(var(--i) * 0.05s);
+    }
+    .button.is-sent .state--sent .icon svg {
+      opacity: 0;
+      animation: btn-appear 0.9s ease forwards 0.25s;
+    }
+
+    /* Failed state active */
+    .button.is-failed .state--default { display: none; }
+    .button.is-failed .state--failed { display: flex; }
+    .button.is-failed .state--failed p span {
+      opacity: 0;
+      animation: btn-slideDown 0.6s ease forwards calc(var(--i) * 0.05s);
+    }
+    .button.is-failed .state--failed .icon svg {
+      opacity: 0;
+      animation: btn-appear 0.9s ease forwards 0.25s;
+    }
+
     /* ============ FOOTER ============ */
     footer {
       border-top: 1px solid var(--line);
@@ -2637,20 +2840,50 @@
             </a>
           </div>
         </div>
-        <form class="reveal" onsubmit="return false;">
+        <form class="reveal" id="contactForm">
           <div class="form-field">
             <label for="fname">Name</label>
-            <input type="text" id="fname" placeholder="your name">
+            <input type="text" id="fname" name="name" placeholder="your name" required>
           </div>
           <div class="form-field">
             <label for="femail">Email</label>
-            <input type="email" id="femail" placeholder="you@email.com">
+            <input type="email" id="femail" name="email" placeholder="you@email.com" required>
           </div>
           <div class="form-field">
             <label for="fmsg">Message</label>
-            <textarea id="fmsg" placeholder="drop me a message..."></textarea>
+            <textarea id="fmsg" name="message" placeholder="drop me a message..." required></textarea>
           </div>
-          <button type="submit" class="btn btn-primary magnetic">Send message</button>
+          <button type="submit" class="button magnetic" id="contactSubmitBtn">
+            <div class="outline"></div>
+            <div class="state state--default">
+              <div class="icon">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 2 11 13" />
+                  <path d="M22 2 15 22l-4-9-9-4 20-9Z" />
+                </svg>
+              </div>
+              <p class="btn-label" data-label="Send message"></p>
+            </div>
+            <div class="state state--sent">
+              <div class="icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M20 6 9 17l-5-5" />
+                </svg>
+              </div>
+              <p class="btn-label" data-label="Message sent"></p>
+            </div>
+            <div class="state state--failed">
+              <div class="icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                  stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M18 6 6 18M6 6l12 12" />
+                </svg>
+              </div>
+              <p class="btn-label" data-label="Failed to send"></p>
+            </div>
+          </button>
         </form>
       </div>
     </section>
@@ -2737,6 +2970,59 @@
       </div>
     </div>
   </div>
+
+  <!-- EmailJS SDK -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    (function () {
+      emailjs.init({ publicKey: "SBfzcFZkrvFxu7x0F" });
+
+      const contactForm = document.getElementById('contactForm');
+      const submitBtn = document.getElementById('contactSubmitBtn');
+
+      // Build letter-by-letter spans for each button state label (needed for the reveal/wave animation)
+      if (submitBtn) {
+        submitBtn.querySelectorAll('.btn-label').forEach(function (label) {
+          const text = label.getAttribute('data-label') || '';
+          label.innerHTML = '';
+          text.split('').forEach(function (ch, i) {
+            const span = document.createElement('span');
+            span.style.setProperty('--i', i + 1);
+            span.textContent = ch === ' ' ? '\u00A0' : ch;
+            label.appendChild(span);
+          });
+        });
+      }
+
+      let revertTimer = null;
+
+      if (contactForm) {
+        contactForm.addEventListener('submit', function (e) {
+          e.preventDefault();
+
+          clearTimeout(revertTimer);
+          submitBtn.classList.remove('is-sent', 'is-failed');
+          submitBtn.disabled = true;
+
+          emailjs.sendForm('service_w8es7gg', 'template_wvrfvmx', contactForm)
+            .then(function () {
+              submitBtn.classList.add('is-sent');
+              contactForm.reset();
+            })
+            .catch(function (error) {
+              submitBtn.classList.add('is-failed');
+              console.error('EmailJS error:', error);
+            })
+            .finally(function () {
+              revertTimer = setTimeout(function () {
+                submitBtn.classList.remove('is-sent', 'is-failed');
+                submitBtn.disabled = false;
+              }, 3500);
+            });
+        });
+      }
+    })();
+  </script>
 
   <script>
     (function () {
