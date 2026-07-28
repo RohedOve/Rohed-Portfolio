@@ -3539,21 +3539,14 @@
           certTitle.textContent = card.dataset.provider + ' — ' + card.dataset.title;
           certDownloadBtn.href = card.dataset.pdf;
           certDownloadBtn.setAttribute('download', card.dataset.title.replace(/\s+/g, '_') + '.pdf');
-          if (isMobileDevice()) {
-            certFrame.style.display = 'none';
-            certFrame.src = '';
-            certFallback.style.display = 'none';
-            certOpenBtn.href = card.dataset.pdf;
-            certFallbackDownload.href = card.dataset.pdf;
-            certFallbackDownload.setAttribute('download', card.dataset.title.replace(/\s+/g, '_') + '.pdf');
-            certImg.src = card.dataset.img;
-            certImgWrap.style.display = 'flex';
-          } else {
-            certImgWrap.style.display = 'none';
-            certFallback.style.display = 'none';
-            certFrame.style.display = '';
-            certFrame.src = card.dataset.pdf + '#toolbar=0&navpanes=0&statusbar=0&view=Fit';
-          }
+          certFrame.style.display = 'none';
+          certFrame.src = '';
+          certFallback.style.display = 'none';
+          certOpenBtn.href = card.dataset.pdf;
+          certFallbackDownload.href = card.dataset.pdf;
+          certFallbackDownload.setAttribute('download', card.dataset.title.replace(/\s+/g, '_') + '.pdf');
+          certImg.src = card.dataset.img;
+          certImgWrap.style.display = 'flex';
           certModal.classList.add('open');
           document.body.style.overflow = 'hidden';
         });
