@@ -936,7 +936,23 @@
       border-radius: var(--radius);
       padding: 1.8rem;
       position: relative;
+      overflow: hidden;
       transition: border-color .3s ease, transform .3s ease;
+    }
+
+    .edu-card > * {
+      position: relative;
+    }
+
+    .edu-watermark {
+      position: absolute;
+      right: -70px;
+      bottom: -80px;
+      width: 250px;
+      height: 250px;
+      color: var(--line);
+      opacity: .55;
+      pointer-events: none;
     }
 
     .edu-card:hover {
@@ -2659,6 +2675,11 @@
         </div>
         <div class="edu-grid">
           <div class="edu-card reveal">
+            <svg class="edu-watermark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 14L21 9L12 4L3 9L12 14Z" />
+              <path d="M7 11.5V17C7 17 9 19 12 19C15 19 17 17 17 17V11.5" />
+              <path d="M3 9V14" />
+            </svg>
             <div class="edu-year">2022 — 2025</div>
             <div class="edu-degree">B.Sc. in Computer Science &amp; Engineering</div>
             <div class="edu-school">Premier University, Chattogram</div>
@@ -2666,6 +2687,11 @@
             <div class="edu-score-label">CGPA</div>
           </div>
           <div class="edu-card reveal">
+            <svg class="edu-watermark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 14L21 9L12 4L3 9L12 14Z" />
+              <path d="M7 11.5V17C7 17 9 19 12 19C15 19 17 17 17 17V11.5" />
+              <path d="M3 9V14" />
+            </svg>
             <div class="edu-year">2019 — 2020</div>
             <div class="edu-degree">Higher Secondary Certificate</div>
             <div class="edu-school">BAF Shaheen College</div>
@@ -2673,6 +2699,11 @@
             <div class="edu-score-label">GPA</div>
           </div>
           <div class="edu-card reveal">
+            <svg class="edu-watermark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 14L21 9L12 4L3 9L12 14Z" />
+              <path d="M7 11.5V17C7 17 9 19 12 19C15 19 17 17 17 17V11.5" />
+              <path d="M3 9V14" />
+            </svg>
             <div class="edu-year">2017 — 2018</div>
             <div class="edu-degree">Secondary School Certificate</div>
             <div class="edu-school">PDB High School</div>
