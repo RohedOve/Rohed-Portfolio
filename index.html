@@ -1317,6 +1317,10 @@
       color: var(--cobalt);
     }
 
+    #tPrev {
+      transform: scaleX(-1);
+    }
+
     .t-dots {
       display: flex;
       gap: .5rem;
@@ -2883,7 +2887,7 @@
           </div>
         </div>
         <div class="t-controls">
-          <button id="tPrev" aria-label="Previous">←</button>
+          <button id="tPrev" aria-label="Previous">→</button>
           <div class="t-dots" id="tDots"></div>
           <button id="tNext" aria-label="Next">→</button>
         </div>
