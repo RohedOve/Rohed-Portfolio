@@ -57,7 +57,7 @@
       --line: #DADAE3;
       --card-bg: #FFFFFF;
       --shadow: 0 20px 60px -25px rgba(0, 0, 0, 0.25);
-      --radius: 3px;
+      --radius: 4px;
       --font-display: 'Newsreader', serif;
       --font-sans: 'Space Grotesk', sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
@@ -391,9 +391,9 @@
 
     .logo {
       font-family: var(--font-display);
-      font-size: 1.3rem;
+      font-size: 1.1rem;
       font-weight: 600;
-      letter-spacing: -.02em;
+      letter-spacing: .05em;
     }
 
     .logo span {
@@ -412,6 +412,12 @@
       position: relative;
       padding-bottom: 2px;
       white-space: nowrap;
+      color: var(--ink-soft);
+      transition: color .25s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--ink);
     }
 
     .nav-links a::after {
@@ -420,8 +426,9 @@
       left: 0;
       bottom: 0;
       width: 0;
-      height: 1px;
-      background: var(--cobalt);
+      height: 1.5px;
+      border-radius: 4px;
+      background: var(--ink-soft);
       transition: width .3s ease;
     }
 
@@ -462,7 +469,7 @@
     /* Moon is fixed on the left end of the track, sun fixed on the right end — neither ever moves */
     .ts-icon {
       position: absolute;
-      top: 6px;
+      top: 5px;
       width: 12px;
       height: 12px;
       z-index: 2;
@@ -601,7 +608,7 @@
       font-size: .8rem;
       letter-spacing: .04em;
       padding: .95rem 1.7rem;
-      border-radius: 100px;
+      border-radius: 50px;
       transition: transform .15s ease, background .3s ease, color .3s ease, border-color .3s ease;
     }
 
@@ -818,6 +825,16 @@
       padding: 1.4rem;
       position: relative;
       overflow: hidden;
+    }
+
+    .about-photo::before {
+      content: '';
+      position: absolute;
+      inset: 12px;
+      border: 1px solid rgba(255, 255, 255, .28);
+      border-radius: 2px;
+      z-index: 2;
+      pointer-events: none;
     }
 
     .about-photo::after {
@@ -1068,7 +1085,7 @@
       font-size: .85rem;
       color: var(--cobalt);
       border: 1px solid var(--line);
-      border-radius: 100px;
+      border-radius: 50px;
       padding: .55rem 1.3rem;
       white-space: nowrap;
       display: inline-block;
@@ -1093,7 +1110,7 @@
       font-size: .78rem;
       padding: .45rem .9rem;
       border: 1px solid var(--line);
-      border-radius: 100px;
+      border-radius: 50px;
       color: var(--ink-soft);
     }
 
@@ -1120,14 +1137,14 @@
 
     .work-preview-btn {
       font-family: var(--font-mono);
-      font-size: .7rem;
+      font-size: .2rem;
       letter-spacing: .04em;
       text-transform: uppercase;
       padding: .5rem 1rem;
-      border-radius: 100px;
+      border-radius: 50px;
       background: transparent;
       border: 1px solid var(--line);
-      color: var(--ink);
+      color: var(--cobalt);
       display: inline-flex;
       align-items: center;
       gap: .35rem;
@@ -1137,7 +1154,7 @@
 
     .work-preview-btn:hover {
       border-color: var(--cobalt);
-      color: var(--cobalt);
+      color: var(--ink);
     }
 
     .work-meta {
@@ -1565,7 +1582,7 @@
       align-items: center;
       justify-content: center;
       border: 1px solid var(--line);
-      border-radius: 50%;
+      border-radius: 30%;
       background: var(--card-bg);
       color: var(--ink-soft);
       transition: border-color .3s ease, color .3s ease, transform .25s ease, background .3s ease, box-shadow .3s ease;
@@ -1647,7 +1664,7 @@
       --primary: #ffffff;
       --neutral-1: var(--cobalt);
       --neutral-2: var(--cobalt-deep);
-      --radius: 100px;
+      --radius: 50px;
 
       cursor: pointer;
       border-radius: var(--radius);
@@ -3009,8 +3026,8 @@
           <div class="label">Certifications Earned</div>
         </div>
         <div class="stat">
-          <div class="num" data-count="1">0</div>
-          <div class="label">Internship Completed</div>
+          <div class="num" data-count="5">0</div>
+          <div class="label">Years of Learning</div>
         </div>
         <div class="stat">
           <div class="num-static">&infin;</div>
